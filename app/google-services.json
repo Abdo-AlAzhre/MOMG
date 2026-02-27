@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "598251784513",
+    "project_id": "xml-tools-18dc9",
+    "storage_bucket": "xml-tools-18dc9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598251784513:android:90757d78bc9e8c4894f9c0",
+        "android_client_info": {
+          "package_name": "com.money.trackpay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598251784513-79geiqeef27ohhpge164qeidsuo7j6dj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiMlzBNVD6zrnZ416-6ppFwfqrLy_01h4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "598251784513-79geiqeef27ohhpge164qeidsuo7j6dj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

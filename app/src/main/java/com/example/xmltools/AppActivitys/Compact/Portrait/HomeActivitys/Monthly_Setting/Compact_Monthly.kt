@@ -56,6 +56,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cairo_bold
 import cairo_medium
+import com.example.xmltools.AppADS.BannerADS
 import com.example.xmltools.Model.All_Withdrawal_data.listOfMonths
 import com.example.xmltools.Model.All_Withdrawal_data.listOfYears
 import com.example.xmltools.ViewModels.Annual_Monthly_VM.MonthlyViewModel
@@ -78,7 +79,10 @@ fun Compact_Monthly(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .navigationBarsPadding()
-            .systemBarsPadding()
+            .systemBarsPadding(),
+        bottomBar = {
+            BannerADS(modifier = Modifier)
+        }
     ) { innerPadding ->
         Image(
             modifier = Modifier.fillMaxSize(),

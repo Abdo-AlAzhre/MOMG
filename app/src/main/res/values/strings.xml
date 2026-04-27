@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">TrackPay</string>
+    <string name="app_name">Money Manager</string>
+    <string name="automatic_add_deposit">Ad this item monthly Automatic</string>
+    <string name="set_data">"Set date "</string>
+    <string name="enter_the_date">Enter the transaction date</string>
+    <string name="dont_forget_date">you forget to add date</string>
 </resources>

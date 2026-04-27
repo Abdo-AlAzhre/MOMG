@@ -59,10 +59,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cairo_bold
 import cairo_medium
+import com.example.xmltools.AppADS.BannerADS
+import com.example.xmltools.AppADS.ImageADS
 import com.example.xmltools.Model.All_Deposit_data.Deposit_data
+import com.example.xmltools.Model.All_TypeItems.StaticDepositType.DepositTypes
 import com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast.MessagesOfToasts
 import com.example.xmltools.ViewModels.DepositDataViewModel.DepositDataViewModel
 import com.example.xmltools.ViewModels.DepositType_VM.DepositTypeViewModel
+import com.example.xmltools.creating_realm_data.Realm_DepositType.Save_DepositType
 import com.example.xmltools.creating_realm_data.Realm_Deposit_LocalData.SaveDepositData
 import com.example.xmltools.ui.theme.AppStyle
 import com.example.xmltools.ui.theme.black
@@ -93,7 +97,16 @@ fun Edit_Deposit(
             .fillMaxSize()
             .navigationBarsPadding()
             .systemBarsPadding(),
+        bottomBar = {
+            BannerADS(modifier = Modifier)
+        }
     ) { paddingValues ->
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(R.drawable.add_edit_background),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+        )
         Edit_Deposit_Body(
             modifier = Modifier
                 .fillMaxSize()
@@ -104,6 +117,7 @@ fun Edit_Deposit(
     }
 }
 
+
 @Composable
 private fun Edit_Deposit_Body(
     modifier: Modifier = Modifier,
@@ -112,15 +126,18 @@ private fun Edit_Deposit_Body(
 ) {
 
     val context = LocalContext.current
-    //~ here we have get all realm :
-    val realm: Realm = remember { SaveDepositData.realmDepositData }
+    //~ here we have get all realm of deposit data:
+    val realmDepositData: Realm = remember { SaveDepositData.realmDepositData }
     val allData = remember {
-        realm.query<Deposit_data>("id == $0", ObjectId(id)).first().find()
+        realmDepositData.query<Deposit_data>("id == $0", ObjectId(id)).first().find()
     }
+    //~ viewModel of deposit datas , types :
     val depositDataViewModel: DepositDataViewModel = viewModel()
     val depositTypeViewModel: DepositTypeViewModel = viewModel()
     //~ here we get old deposit types :
     val oldDepositTypes by depositTypeViewModel.depositTypesFlow.collectAsState(initial = emptyList())
+    var getOldType by rememberSaveable { mutableStateOf("") }
+
 
     //~ here we get all data from Deposit data :
     var depositAmount by rememberSaveable { mutableStateOf(allData!!.depositAmount.toString()) }
@@ -132,22 +149,29 @@ private fun Edit_Deposit_Body(
     var item by rememberSaveable { mutableStateOf(allData!!.depositDescriptor) }
     var depositTypes by rememberSaveable { mutableStateOf(allData!!.depositType) }
 
-
     var showDataPicker by rememberSaveable { mutableStateOf(false) }
     var showTypesMenu by rememberSaveable { mutableStateOf(false) }
-
 
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
+            //` here we save the new edit of deposit data :
             SaveData(
                 modifier = Modifier,
                 onClick = {
                     val amountValue = depositAmount.toDoubleOrNull()
 
                     if (depositTypes.isNotEmpty() && amountValue != null && days > 0 && depositTypes != "إضافة شئ اخر + ") {
+                        //2 checking if it is old type we will just edit it , else we will add new one :
+                        oldDepositTypes.forEach { oldType ->
+                            getOldType = oldType.depositType
+                        }
+                        if (depositTypes != getOldType) {
+                            depositTypeViewModel.addDepositType(context, depositTypes)
+                        }
 
-                        depositTypeViewModel.addDepositType(context, depositTypes)
+
+                        //2 this to add the new deposit data:
                         depositDataViewModel.editDepositData(
                             context = context,
                             id = allData!!.id,
@@ -242,7 +266,8 @@ private fun Edit_Deposit_Body(
                 //~here we add the new type of withdrawal :
                 Box(
                     modifier = Modifier.weight(1f),
-                ) {
+                )
+                {
                     OutlinedTextField(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -294,6 +319,7 @@ private fun Edit_Deposit_Body(
                         containerColor = dark_blue_shadow,
                     ) {
                         oldDepositTypes.forEach { theTypes ->
+                            //` the menu of types :
                             DropdownMenuItem(
                                 text = {
                                     Row(
@@ -331,7 +357,8 @@ private fun Edit_Deposit_Body(
                         color = skyBlue,
                     ),
                 verticalAlignment = Alignment.CenterVertically,
-            ) {
+            )
+            {
                 Button(
                     modifier = Modifier.padding(horizontal = 6.dp),
                     onClick = {
@@ -423,8 +450,14 @@ private fun SaveData(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
+
+    val context = LocalContext.current
+
     Button(
-        onClick = { onClick() },
+        onClick = {
+            ImageADS(context = context)//4 here we add image ads \\
+            onClick()
+        },
         shape = RoundedCornerShape(size = 12.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = AppStyle.floatButtonColor
@@ -468,7 +501,7 @@ private fun DatePickerModel(
         colors = DatePickerDefaults.colors(
             containerColor = AppStyle.dialogColor
         ),
-        onDismissRequest = {onDismissButton()},
+        onDismissRequest = { onDismissButton() },
         confirmButton = {
             Row(
                 modifier = Modifier
@@ -521,7 +554,7 @@ private fun DatePickerModel(
                 todayDateBorderColor = red,
 
                 yearContentColor = white,
-                currentYearContentColor=white,
+                currentYearContentColor = white,
                 selectedYearContentColor = black,
                 selectedYearContainerColor = blueLight,
 

@@ -4,7 +4,7 @@ import com.example.xmltools.Model.All_TypeItems.StaticWithdrawalTypes_List.Withd
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 
-object SaveTypeItems {
+object SaveWithdrawalType {
     val realm: Realm by lazy {
         val config = RealmConfiguration.Companion.create(schema = setOf(WithdrawalTypeItems::class))
         Realm.Companion.open(config)

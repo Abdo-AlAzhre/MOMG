@@ -8,8 +8,8 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.example.xmltools" />
-                  <option name="mobileSdkAppId" value="1:598251784513:android:e0e28f3214be92f794f9c0" />
+                  <option name="appId" value="com.money.trackpay" />
+                  <option name="mobileSdkAppId" value="1:598251784513:android:90757d78bc9e8c4894f9c0" />
                   <option name="projectId" value="xml-tools-18dc9" />
                   <option name="projectNumber" value="598251784513" />
                 </ConnectionSetting>

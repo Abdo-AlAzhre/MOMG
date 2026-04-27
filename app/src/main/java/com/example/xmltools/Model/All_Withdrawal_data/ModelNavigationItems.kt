@@ -1,7 +1,4 @@
-package com.example.xmltools.Model.All_Locale_data
-
-import androidx.compose.ui.res.stringResource
-import com.money.trackpay.R
+package com.example.xmltools.Model.All_Withdrawal_data
 
 data class ModelNavigationItems(
     var title: String,

@@ -1,3 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="google_login_title">Easy way to track pay</string>
+    <string name="google_login">Enter</string>
+    <string name="email_login">Use Email To Login</string>
+    <string name="i_do_not_have_account">Create new account</string>
+
+    <string name="new_account">Have new account</string>
+    <string name="login_screen">LogIn</string>
+    <string name="enter_name">Enter your name</string>
+
+    <string name="enter_email">Enter your email</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="forgot_password">I forgot my password</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="have_account">I have account</string>
+    <string name="sigin_screen">Create a new account</string>
+
+    <string name="send_code_to_email">Send Code</string>
+    <string name="setting">Setting</string>
+    <string name="monthly_inventory">Monthly Inventory</string>
+
+    <string name="new_item">New expenses</string>
+    <string name="save_item">save expenses</string>
+    <string name="delete">delete expenses</string>
+
+    <string name="edit">Edit expenses</string>
+    <string name="withdrawal">Withdrawal</string>
+    <string name="deposit">Deposit</string>
+
+    <string name="annual_inventory">Annual Inventory</string>
+
+    <string name="category_inventory">Category Inventory</string>
+    <string name="amount">Amount</string>
+    <string name="category">Category</string>
+
+    <string name="all_amount">Total Amount</string>
+    <string name="items">Items</string>
+
+    <string name="day">day</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+
+    <string name="description">Description</string>
+    <string name="more_information">More Information</string>
+    <string name="add_new_category">Add new Category</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="save_data">Save data</string>
+    <string name="you_are_abut_to_delete">sure you want to delete !! :</string>
+
+    <string name="you_did_not_login">You have to login</string>
+    <string name="recover_data">Recover data</string>
+    <string name="logout">Logout</string>
+
+
+    <string name="total_amount">Available</string>
+    <string name="there_is_no_data_of_this_month">no data this month</string>
+    <string name="there_is_no_data_of_this_year">no data this year</string>
+
+    <string name="no_withdrawal_in_this_year">there is no withdrawal in this year </string>
+    <string name="total_deposit_in_this_year">Total deposit in this year </string>
+    <string name="total_withdrawal_in_this_year">Total withdrawal</string>
+
+    <string name="expenses_of_the_year">data of this year</string>
+    <string name="search"> ... search</string>
+    <string name="search_by_category">Date or Category</string>
+
+    <string name="warning_title">Welcome</string>
+    <string name="warning_message">It is a simple application for : \nStoring and managing financial data\nYou may fond some ads , so we apologize for the inconvenience.</string>
+    <string name="are_you_shore">I understand</string>
+
+    <string name="arabic">العربيه</string>
+    <string name="english">English</string>
+    <string name="green_theme">green </string>
+
+    <string name="blue_theme">blue </string>
+    <string name="theme">Theme</string>
+    <string name="language">Language</string>
+
+    <string name="dark_mode">Dark mode</string>
+    <string name="light_mode">Light mode</string>
+    <string name="vertion" translatable="false"> vertion : 1.0.5</string>
+
+    <string name="category_edit">Withdrawal category edit</string>
+
 </resources>

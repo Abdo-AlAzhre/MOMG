@@ -1,4 +1,4 @@
-package com.example.xmltools.ViewModels.Type_VM
+package com.example.xmltools.ViewModels.WithdrawalType_VM
 
 import android.content.Context
 import android.widget.Toast
@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.mongodb.kbson.ObjectId
 
-class TypeViewModel(private val realm: Realm = SaveWithdrawalType.realm) : ViewModel() {
+class WithdrawalTypeViewModel(private val realm: Realm = SaveWithdrawalType.realm) : ViewModel() {
 
     // we will use ths value to show our items in ui :
-    val typesFlow = realm.query<WithdrawalTypeItems>().asFlow().map { it.list }
+    val withdrawalTypesFlow = realm.query<WithdrawalTypeItems>().asFlow().map { it.list }
 
     // we will use this function to show message to user :
     fun showToast(context: Context, message: String) {
@@ -24,7 +24,7 @@ class TypeViewModel(private val realm: Realm = SaveWithdrawalType.realm) : ViewM
     }
 
     // we will use this function to manual add new data to realm :
-    fun addType(context: Context, name: String) {
+    fun addWithdrawalType(context: Context, name: String) {
         viewModelScope.launch {
             if (name.isNotBlank() && name.isNotEmpty()) {
                 try {
@@ -74,21 +74,4 @@ class TypeViewModel(private val realm: Realm = SaveWithdrawalType.realm) : ViewM
         }
     }
 
-    // to add static items to our list we need to use this function for one time :
-    fun insertDefaultTypesIfNeeded(context: Context) {
-        viewModelScope.launch {
-            val existing = realm.query<WithdrawalTypeItems>().find()
-            try {
-                if (existing.isEmpty()) {
-                    realm.write {
-                        StaticWithdrawalType_List.listOfType.forEach { name ->
-                            copyToRealm(WithdrawalTypeItems().apply { this.WithdrawalType = name })
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                showToast(context, "error : $e")
-            }
-        }
-    }
 }

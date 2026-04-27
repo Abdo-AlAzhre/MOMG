@@ -9,15 +9,16 @@ plugins {
 }
 
 android {
-    namespace = "com.example.xmltools"
+    namespace = "com.money.trackpay"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.xmltools"
-        minSdk = 28
+        applicationId = "com.money.trackpay"
+        minSdk = 23
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+
+        versionCode = 6
+        versionName = "1.0.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,6 +45,9 @@ android {
 }
 
 dependencies {
+    //1 here we implement user`s local Auth :
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.biometric:biometric:1.1.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -55,6 +59,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.animation.core.lint)
     implementation(libs.androidx.runtime)
+    implementation(libs.androidx.compose.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -79,6 +84,7 @@ dependencies {
     implementation("androidx.credentials:credentials:1.3.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
     //  Navigation :
     implementation("androidx.navigation:navigation-compose:2.8.6")
     // Navigation with Animation
@@ -90,4 +96,8 @@ dependencies {
     implementation("com.guolindev.permissionx:permissionx:1.7.1")
     // to use Lottie animation :
     implementation("com.airbnb.android:lottie-compose:6.3.0")
+    // to make it do some function on background :
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    //to add ADS to this app
+    implementation("com.startapp:inapp-sdk:5.3.0")
 }

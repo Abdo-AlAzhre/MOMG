@@ -53,6 +53,8 @@ import androidx.navigation.NavHostController
 import cairo_bold
 import cairo_medium
 import cairo_regular
+import com.example.xmltools.AppADS.BannerADS
+import com.example.xmltools.AppADS.ImageADS
 import com.example.xmltools.Model.All_Deposit_data.Deposit_data
 import com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast.MessagesOfToasts
 import com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast.ModelMoreButtons
@@ -81,7 +83,17 @@ fun Deposit_Information(
             .fillMaxSize()
             .navigationBarsPadding()
             .systemBarsPadding(),
+        bottomBar = {
+            BannerADS(modifier = Modifier)
+        }
     ) { paddingValues ->
+
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(R.drawable.ferst_background),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+        )
         DepositInformation_Body(
             modifier = Modifier
                 .fillMaxSize()
@@ -376,6 +388,9 @@ private fun morInfoDialog(
     onCansel: () -> Unit,
     onConfirm: () -> Unit
 ) {
+
+    val context = LocalContext.current
+
     AlertDialog(
         modifier = Modifier.graphicsLayer {
 
@@ -432,6 +447,7 @@ private fun morInfoDialog(
             ) {
                 Button(
                     onClick = {
+                        ImageADS(context = context)//4 here we add image ads \\
                         onCansel()
                     },
                     colors = ButtonDefaults.buttonColors(
@@ -448,6 +464,7 @@ private fun morInfoDialog(
                 Button(
 
                     onClick = {
+                        ImageADS(context = context)//4 here we add image ads \\
                         onConfirm()
                     },
                     colors = ButtonDefaults.buttonColors(

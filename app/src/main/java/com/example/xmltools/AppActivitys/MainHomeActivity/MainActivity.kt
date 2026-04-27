@@ -1,4 +1,4 @@
-package com.example.xmltools.AppActivity
+package com.money.trackpay.AppActivitys.MainHomeActivity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,16 +9,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.xmltools.Model.All_Locale_data.messages_ofToast.MessagesOfToasts
-import com.example.xmltools.Model.All_Locale_data.Language_Color_Lists.GetLanguage_ColorName
+import com.example.xmltools.AppActivitys.Nav_Size.ShowScreens
+import com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast.MessagesOfToasts
+import com.example.xmltools.Model.All_Withdrawal_data.Language_Color_Lists.GetLanguage_ColorName
 import com.example.xmltools.ViewModels.Automatic_Save_VM.BackupViewModel
-import com.example.xmltools.ViewModels.Type_VM.TypeViewModel
+import com.example.xmltools.ViewModels.WithdrawalType_VM.WithdrawalTypeViewModel
 import com.example.xmltools.ui.theme.Change_Style
 import com.example.xmltools.ui.theme.XMLToolsTheme
 
@@ -42,11 +42,9 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center
                 ){
                     ShowScreens()
-                   val viewModel: TypeViewModel = viewModel()
+                   val viewModel: WithdrawalTypeViewModel = viewModel()
                     val context = LocalContext.current
-                    LaunchedEffect(Unit) {
-                        viewModel.insertDefaultTypesIfNeeded(context)
-                    }
+
                 }
             }
         }

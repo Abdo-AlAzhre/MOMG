@@ -1,6 +1,6 @@
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import com.example.xmltools.R
+import com.money.trackpay.R
 val cairo_bold = FontFamily(
     Font(R.font.cairo_bold)
 )

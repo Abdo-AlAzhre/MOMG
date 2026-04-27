@@ -57,6 +57,8 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.xmltools.AppADS.BannerADS
+import com.example.xmltools.AppADS.ImageADS
 import com.money.trackpay.R
 import com.example.xmltools.ViewModels.Guest_VM.GuestViewModel
 import com.example.xmltools.ui.theme.AppStyle
@@ -77,8 +79,7 @@ fun FirstActivity(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .navigationBarsPadding()
-            .systemBarsPadding(),
-        bottomBar = {
+            .systemBarsPadding(), bottomBar = {
             First_bottom()
         }
 
@@ -113,8 +114,7 @@ private fun FirstActivityBody(
             22.dp
         } else {
             0.dp
-        },
-        animationSpec = MaterialTheme.motionScheme.slowSpatialSpec()
+        }, animationSpec = MaterialTheme.motionScheme.slowSpatialSpec()
     )
 
     val context = LocalContext.current
@@ -122,8 +122,7 @@ private fun FirstActivityBody(
 
 
     Column(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
@@ -133,8 +132,7 @@ private fun FirstActivityBody(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
-                modifier = Modifier.height(220.dp),
-                verticalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.height(220.dp), verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     "M",
@@ -221,22 +219,18 @@ private fun FirstActivityBody(
                 )
                 Spacer(modifier = Modifier.height(42.dp))
                 Button(
-                    modifier = Modifier
-                        .alpha(1f),
-                    onClick = {
+                    modifier = Modifier.alpha(1f), onClick = {
                         googleSelected = true
                         scope.launch {
                             delay(500)
                             showWarningMessage = true
                         }
-                    },
-                    colors = ButtonDefaults.buttonColors(
+                    }, colors = ButtonDefaults.buttonColors(
                         containerColor = AppStyle.buttonColor
                     )
                 ) {
                     Text(
-                        text = stringResource(R.string.google_login),
-                        color = AppStyle.outLinText
+                        text = stringResource(R.string.google_login), color = AppStyle.outLinText
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Icon(
@@ -249,7 +243,6 @@ private fun FirstActivityBody(
             }
 
 
-
         }
     }
 }
@@ -257,116 +250,101 @@ private fun FirstActivityBody(
 
 @Composable
 fun First_bottom(modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Text(
-            modifier = Modifier.padding(bottom = 4.dp),
-            text = stringResource(R.string.vertion),
-            fontSize = 13.sp,
-            color = AppStyle.textColor2,
-        )
-    }
+    BannerADS(
+        modifier = modifier
+            .height(50.dp)
+            .fillMaxWidth()
+    )//4 here we add image ads \\
 }
 
 
 @Composable
 private fun ShowWarningMessage(
-    onConfirm: (chek: Boolean) -> Unit,
-    onCancel: () -> Unit
+    onConfirm: (chek: Boolean) -> Unit, onCancel: () -> Unit
 ) {
     var checkIsDone by remember { mutableStateOf(false) }
+    val context = LocalContext.current
     AlertDialog(
         title = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = stringResource(R.string.warning_title),
-                    color = red,
-                    fontFamily = readexpro_bold,
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(R.string.warning_title),
+                color = red,
+                fontFamily = readexpro_bold,
 
-                    )
-            }
-        },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = stringResource(R.string.warning_message),
-                    textAlign = TextAlign.Center,
-                    color = AppStyle.textColor2,
-                    fontSize = 20.sp,
-                    lineHeight = 30.sp
                 )
-                Spacer(modifier = Modifier.height(0.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Checkbox(
-                        checked = checkIsDone,
-                        onCheckedChange = { checkIsDone = it },
-                        colors = CheckboxDefaults.colors(
-                            checkedColor = soft_blue
-                        ),
-
-                        )
-                    Text(
-                        text = stringResource(R.string.are_you_shore),
-                        color = AppStyle.textColor2,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-        },
-        onDismissRequest = {},
-        confirmButton = {},
-        dismissButton = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 2.dp)
+        }
+    }, text = {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(R.string.warning_message),
+                textAlign = TextAlign.Center,
+                color = AppStyle.textColor2,
+                fontSize = 20.sp,
+                lineHeight = 30.sp
+            )
+            Spacer(modifier = Modifier.height(0.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
-                Button(
-                    modifier = Modifier.align(Alignment.CenterStart),
-                    onClick = {
-                        onCancel()
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = AppStyle.buttonColor
-                    )
-                ) {
-                    Text(text = stringResource(R.string.cancel), color = AppStyle.outLinText)
-                }
-                Button(
-                    modifier = Modifier.align(Alignment.CenterEnd),
-                    onClick = {
-                        onConfirm(checkIsDone)
-                    },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = AppStyle.buttonColor
+                Checkbox(
+                    checked = checkIsDone,
+                    onCheckedChange = { checkIsDone = it },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = soft_blue
                     ),
-                    enabled = checkIsDone
-                ) {
-                    Text(text = stringResource(R.string.confirm), color = AppStyle.outLinText)
-                }
+
+                    )
+                Text(
+                    text = stringResource(R.string.are_you_shore),
+                    color = AppStyle.textColor2,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
-        },
-        shape = RoundedCornerShape(12.dp),
-        containerColor = AppStyle.alertDialogColor
+        }
+    }, onDismissRequest = {}, confirmButton = {}, dismissButton = {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 2.dp)
+        ) {
+            Button(
+                modifier = Modifier.align(Alignment.CenterStart), onClick = {
+                    ImageADS(context = context)//4 here we add image ads \\
+                    onCancel()
+                }, colors = ButtonDefaults.buttonColors(
+                    containerColor = AppStyle.buttonColor
+                )
+            ) {
+                Text(text = stringResource(R.string.cancel), color = AppStyle.outLinText)
+            }
+            Button(
+                modifier = Modifier.align(Alignment.CenterEnd), onClick = {
+                    ImageADS(context = context)//4 here we add image ads \\
+                    onConfirm(checkIsDone)
+                }, colors = ButtonDefaults.buttonColors(
+                    containerColor = AppStyle.buttonColor
+                ), enabled = checkIsDone
+            ) {
+                Text(text = stringResource(R.string.confirm), color = AppStyle.outLinText)
+            }
+        }
+    }, shape = RoundedCornerShape(12.dp), containerColor = AppStyle.alertDialogColor
     )
 }
 

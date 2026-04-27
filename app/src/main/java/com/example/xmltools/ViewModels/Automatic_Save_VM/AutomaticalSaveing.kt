@@ -1,4 +1,4 @@
-package com.example.xmltools.ViewModels
+package com.example.xmltools.ViewModels.Automatic_Save_VM
 
 import android.annotation.SuppressLint
 import android.app.Application
@@ -15,8 +15,8 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.example.xmltools.R
-import com.example.xmltools.creating_realm_data.SavingLocaleData
+import com.money.trackpay.R
+import com.example.xmltools.creating_realm_data.Realm_Withdrawal_LocalData.SavingWithdrawalData
 import java.io.File
 
 // viewModel to Automatic save :
@@ -43,7 +43,7 @@ class AutomaticSaving(appContext: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         return try {
             outBackupRealmDatabase(applicationContext)
-            showNotification(applicationContext)
+//            showNotification(applicationContext)
             Result.success()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -54,7 +54,7 @@ class AutomaticSaving(appContext: Context, workerParams: WorkerParameters) :
     // to save backup after 24 hour :
     private fun outBackupRealmDatabase(context: Context) {
 
-        val realm = SavingLocaleData.realmLocaleData
+        val realm = SavingWithdrawalData.realmWithdrawal
         val realmFile = File(realm.configuration.path)
         // المجلد اللي هتنسخ فيه
         val backupDir = File(context.getExternalFilesDir(null), "RealmBackup")

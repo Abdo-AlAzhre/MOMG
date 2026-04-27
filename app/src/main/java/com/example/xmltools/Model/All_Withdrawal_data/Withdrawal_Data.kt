@@ -8,7 +8,7 @@ import java.util.Calendar
 
 private var calendar = Calendar.getInstance()
 
-open class LocaleDataBase : RealmObject {
+open class Withdrawal_Data : RealmObject {
     @PrimaryKey
     var id: ObjectId = ObjectId()
 
@@ -19,15 +19,17 @@ open class LocaleDataBase : RealmObject {
     var day: Int = calendar.get(Calendar.DAY_OF_MONTH)
     var month: Int = calendar.get(Calendar.MONTH) + 1
     var year: Int = calendar.get(Calendar.YEAR)
-    var date: String = "$day/$month/$year"
 
-    var withdrawalIcon:Int = R.drawable.withdrawal
+    var date: String = "$day/$month/$year"
+    var currentTimeMillis = System.currentTimeMillis()//~ this  variable is to arrange data by time that user saved this data in :
+
+    var withdrawalIcon: Int = R.drawable.withdrawal
 }
 
 val listOfMonths = listOf(
     "1", "2", "3", "4", "5", "6",
     "7", "8", "9", "10", "11", "12"
 )
-val listOfYears = (2000..calendar.get(Calendar.YEAR)).toList()
+val listOfYears = (1900..calendar.get(Calendar.YEAR)).toList()
 
 

@@ -1,4 +1,4 @@
-package com.example.xmltools.Model.All_Locale_data.messages_ofToast
+package com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -38,6 +38,7 @@ object MessagesOfToasts {
     var make_sure_the_amount_is_in_numbers_only =""
 
     var you_forgot_to_add_category =""
+    var dont_forget_date =""
 
     @Composable
     fun SetMessageTests() {
@@ -74,6 +75,7 @@ object MessagesOfToasts {
         make_sure_the_amount_is_in_numbers_only = stringResource(R.string.make_sure_the_amount_is_in_numbers_only)
 
         you_forgot_to_add_category = stringResource(R.string.you_forgot_to_add_category)
+        dont_forget_date = stringResource(R.string.dont_forget_date)
 
     }
 }

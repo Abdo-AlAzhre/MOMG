@@ -1,10 +1,9 @@
-package com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys
+package com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Category_Annual
 
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Paint
 
-import android.graphics.Typeface
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
@@ -62,6 +61,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cairo_medium
+import com.example.xmltools.AppADS.BannerADS
 import com.example.xmltools.Model.All_Withdrawal_data.listOfYears
 import com.example.xmltools.ViewModels.Annual_Monthly_VM.AnnualViewModel
 import com.example.xmltools.ui.theme.AppStyle
@@ -79,7 +79,10 @@ fun Compact_Annual(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .navigationBarsPadding()
-            .systemBarsPadding()
+            .systemBarsPadding(),
+        bottomBar = {
+            BannerADS(modifier = Modifier)
+        }
 
     ) { innerPadding ->
         Image(
@@ -338,7 +341,7 @@ fun AnnualExpensesChartScreen(
             else {
                 Text(
                     modifier = Modifier.align(Alignment.TopCenter),
-                    text = stringResource(R.string.total_withdrawal_in_this_year),
+                    text = "${stringResource(R.string.total_withdrawal_in_this_year)} : $withdrawalTotalAmount",
                     color = AppStyle.textColor2,
                     fontFamily = readexpro_bold,
                     textAlign = TextAlign.Center,
@@ -412,10 +415,6 @@ fun AnimatedAnnualBarChart(
                             if (darkTheme) Color.parseColor("#000000") else Color.parseColor(
                                 "#000000"
                             )
-//                        Paint.setTypeface = Typeface.create(
-//                            "sans-serif-medium",
-//                            Typeface.BOLD
-//                        )
                         textAlign = Paint.Align.CENTER
                     }
                 )
@@ -431,10 +430,6 @@ fun AnimatedAnnualBarChart(
                                 if (darkTheme) Color.parseColor("#000000") else Color.parseColor(
                                     "#000000"
                                 )
-//                            Paint.setTypeface = Typeface.create(
-//                                "sans-serif",
-//                                Typeface.BOLD
-//                            )
                             textAlign = Paint.Align.CENTER
                         }
                     )

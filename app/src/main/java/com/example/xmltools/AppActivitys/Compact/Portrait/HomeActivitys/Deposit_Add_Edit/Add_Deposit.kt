@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -59,6 +60,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cairo_bold
 import cairo_medium
+import com.example.xmltools.AppADS.BannerADS
+import com.example.xmltools.AppADS.ImageADS
 import com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast.MessagesOfToasts
 import com.example.xmltools.ViewModels.DepositDataViewModel.DepositDataViewModel
 import com.example.xmltools.ViewModels.DepositType_VM.DepositTypeViewModel
@@ -73,6 +76,7 @@ import com.example.xmltools.ui.theme.skyBlue
 import com.example.xmltools.ui.theme.sky_blue
 import com.example.xmltools.ui.theme.white
 import com.money.trackpay.R
+import org.mongodb.kbson.ObjectId
 import readexpro_medium
 import java.util.Calendar
 
@@ -85,7 +89,10 @@ fun Add_Deposit(
         modifier = Modifier
             .fillMaxSize()
             .navigationBarsPadding()
-            .systemBarsPadding()
+            .systemBarsPadding(),
+        bottomBar = {
+            BannerADS(modifier = Modifier)
+        }
     ) { paddingValues ->
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -102,6 +109,7 @@ fun Add_Deposit(
     }
 }
 
+
 private @Composable
 fun DepositHome(
     modifier: Modifier = Modifier,
@@ -115,12 +123,13 @@ fun DepositHome(
     val depositTypeViewModel: DepositTypeViewModel = viewModel()
     //` this variable to get types deposit data from Realm :
     val newDepositTypes by depositTypeViewModel.depositTypesFlow.collectAsState(initial = emptyList())
+    var getType by rememberSaveable { mutableStateOf("") }
     //` thia variable to use deposit datas viewModel:
     val depositDataViewModel: DepositDataViewModel = viewModel()
 
     //` this variable to get data from data picker :
-    var day by rememberSaveable { mutableStateOf( calendar.get(Calendar.DAY_OF_MONTH)) }
-    var month by rememberSaveable { mutableStateOf(calendar.get(Calendar.MONTH)) }
+    var day by rememberSaveable { mutableStateOf(calendar.get(Calendar.DAY_OF_MONTH)) }
+    var month by rememberSaveable { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
     var year by rememberSaveable { mutableStateOf(calendar.get(Calendar.YEAR)) }
 
     var depositAmount by rememberSaveable { mutableStateOf("") }
@@ -139,10 +148,17 @@ fun DepositHome(
                     val amountValue = depositAmount.toDoubleOrNull()
 
                     if (amountValue != null && depositTypes.isNotEmpty() && amountValue > 0.0 && day > 0) {
-                        depositTypeViewModel.addDepositType(
-                            context = context,
-                            name = depositTypes
-                        )
+                        //3 here we chicking if this type is in list or not  , if it is new type we will add it else we will not :
+                        newDepositTypes.forEach { oldType ->
+                            getType = oldType.depositType
+                        }
+                        if (depositTypes != getType) {
+                            depositTypeViewModel.addDepositType(
+                                context = context,
+                                name = depositTypes
+                            )
+                        }
+                        //3 here we add the new  data :
                         depositDataViewModel.addDepositData(
                             context = context,
                             amount = amountValue,
@@ -152,8 +168,8 @@ fun DepositHome(
                             month = month,
                             year = year,
                         )
-                        navController.navigate("Compact_home"){
-                            popUpTo("Compact_add_deposit"){
+                        navController.navigate("Compact_home") {
+                            popUpTo("Compact_add_deposit") {
                                 inclusive = true
                             }
                             launchSingleTop = true
@@ -413,6 +429,8 @@ private fun SaveButton(
     modifier: Modifier = Modifier,
     onTheClick: () -> Unit,
 ) {
+    val context = LocalContext.current
+
     Button(
         modifier = modifier
             .alpha(0.90f)
@@ -422,6 +440,7 @@ private fun SaveButton(
             containerColor = AppStyle.floatButtonColor
         ),
         onClick = {
+            ImageADS(context = context)//4 here we add image ads \\
             onTheClick()
         },
     ) {
@@ -462,7 +481,7 @@ private fun DatePickerModel(
         colors = DatePickerDefaults.colors(
             containerColor = AppStyle.dialogColor
         ),
-        onDismissRequest = {onDismissButton()},
+        onDismissRequest = { onDismissButton() },
         confirmButton = {
             Row(
                 modifier = Modifier
@@ -515,7 +534,7 @@ private fun DatePickerModel(
                 todayDateBorderColor = red,
 
                 yearContentColor = white,
-                currentYearContentColor=white,
+                currentYearContentColor = white,
                 selectedYearContentColor = black,
                 selectedYearContainerColor = blueLight,
 

@@ -59,6 +59,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cairo_bold
 import cairo_medium
+import com.example.xmltools.AppADS.BannerADS
 import com.example.xmltools.Model.All_Withdrawal_data.Withdrawal_Data
 import com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast.MessagesOfToasts
 import com.example.xmltools.ViewModels.Withdrawal_data_VM.WithdrawalDataViewModel
@@ -84,6 +85,9 @@ fun Compact_AddNewItems(navController: NavHostController) {
             .fillMaxSize()
             .systemBarsPadding()
             .navigationBarsPadding(),
+        bottomBar = {
+            BannerADS(modifier = Modifier)
+        }
     ) { innerpadding ->
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -100,14 +104,15 @@ private fun Compact_AddBody(modifier: Modifier = Modifier, navController: NavHos
     val context = LocalContext.current
     val withdrawalDataViewModel: WithdrawalDataViewModel = viewModel()
     val calendar = Calendar.getInstance()
-
+    //1 withdrawal types
     val withdrawalTypeViewModel: WithdrawalTypeViewModel = viewModel()
     val newWithdrawalType by withdrawalTypeViewModel.withdrawalTypesFlow.collectAsState(initial = emptyList())
+    var getOldType by rememberSaveable { mutableStateOf("") }
 
     var withdrawalAmount by rememberSaveable { mutableStateOf("") }
 
     var days by rememberSaveable { mutableStateOf(calendar.get(Calendar.DAY_OF_MONTH)) }
-    var months by rememberSaveable { mutableStateOf(calendar.get(Calendar.MONTH)) }
+    var months by rememberSaveable { mutableStateOf(calendar.get(Calendar.MONTH)+1) }
     var years by rememberSaveable { mutableStateOf(calendar.get(Calendar.YEAR)) }
 
     var item by rememberSaveable { mutableStateOf("") }
@@ -246,7 +251,7 @@ private fun Compact_AddBody(modifier: Modifier = Modifier, navController: NavHos
                 }
             }
 
-            //. add days :
+            //` add days :
             //` here we get days , mounthes , and years :
             Row(
                 modifier = Modifier
@@ -360,7 +365,15 @@ private fun Compact_AddBody(modifier: Modifier = Modifier, navController: NavHos
                         type = withdrawalTypes
                         date = "$day/$month/$year"
                     }
-                    withdrawalTypeViewModel.addWithdrawalType(context, withdrawalTypes)
+                    //3 here we chicking if this type is in list or not  , if it is new type we will add it else we will not :
+                    newWithdrawalType.forEach {oldType->
+                        getOldType = oldType.WithdrawalType
+                    }
+                    if (withdrawalTypes!=getOldType){
+
+                        withdrawalTypeViewModel.addWithdrawalType(context, withdrawalTypes)
+                    }
+                    //3here we add the new  data :
                     withdrawalDataViewModel.addNewData(
                         context = context,
                         locateDataBase = withdrawalData,

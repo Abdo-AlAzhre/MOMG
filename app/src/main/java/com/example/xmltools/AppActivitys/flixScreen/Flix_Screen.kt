@@ -1,4 +1,4 @@
-package com.example.xmltools.AppActivity.flixScreen
+package com.example.xmltools.AppActivitys.flixScreen
 
 import android.app.Activity
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi

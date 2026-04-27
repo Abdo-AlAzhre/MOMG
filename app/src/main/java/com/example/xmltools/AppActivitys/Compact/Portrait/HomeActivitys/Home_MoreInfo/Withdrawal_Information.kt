@@ -54,6 +54,8 @@ import androidx.navigation.NavHostController
 import cairo_bold
 import cairo_medium
 import cairo_regular
+import com.example.xmltools.AppADS.BannerADS
+import com.example.xmltools.AppADS.ImageADS
 import com.example.xmltools.Model.All_Withdrawal_data.Withdrawal_Data
 import com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast.ModelMoreButtons
 import com.example.xmltools.ViewModels.Withdrawal_data_VM.WithdrawalDataViewModel
@@ -64,6 +66,7 @@ import com.example.xmltools.ui.theme.blue_green
 import com.example.xmltools.ui.theme.green
 import com.example.xmltools.ui.theme.red
 import com.money.trackpay.R
+import com.startapp.sdk.ads.banner.Banner
 import io.realm.kotlin.ext.query
 import org.mongodb.kbson.ObjectId
 import readexpro_medium
@@ -75,6 +78,9 @@ fun Withdrawal_Information(navController: NavHostController, id: String) {
             .fillMaxSize()
             .navigationBarsPadding()
             .systemBarsPadding(),
+        bottomBar = {
+            BannerADS(modifier = Modifier)
+        }
     ) { innerPadding ->
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -85,7 +91,6 @@ fun Withdrawal_Information(navController: NavHostController, id: String) {
         Compact_ShowMoreInfoBody(modifier = Modifier.padding(innerPadding), navController, id = id)
     }
 }
-
 
 @Composable
 private fun Compact_ShowMoreInfoBody(
@@ -362,6 +367,9 @@ private fun morInfoDialog(
     onCansel: () -> Unit,
     onConfirm: () -> Unit
 ) {
+
+    val context = LocalContext.current
+
     AlertDialog(
         modifier = Modifier.graphicsLayer {
 
@@ -418,6 +426,7 @@ private fun morInfoDialog(
             ) {
                 Button(
                     onClick = {
+                        ImageADS(context=context)//4 here we add image ads \\
                         onCansel()
                     },
                     colors = ButtonDefaults.buttonColors(
@@ -434,6 +443,7 @@ private fun morInfoDialog(
                 Button(
 
                     onClick = {
+                        ImageADS(context=context)
                         onConfirm()
                     },
                     colors = ButtonDefaults.buttonColors(

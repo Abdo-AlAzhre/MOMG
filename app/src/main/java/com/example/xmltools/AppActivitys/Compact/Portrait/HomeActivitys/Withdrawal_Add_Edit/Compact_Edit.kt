@@ -59,10 +59,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cairo_bold
 import cairo_medium
+import com.example.xmltools.AppADS.BannerADS
+import com.example.xmltools.AppADS.ImageADS
+import com.example.xmltools.Model.All_TypeItems.StaticWithdrawalTypes_List.WithdrawalTypeItems
 import com.example.xmltools.Model.All_Withdrawal_data.Withdrawal_Data
 import com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast.MessagesOfToasts
 import com.example.xmltools.ViewModels.Withdrawal_data_VM.WithdrawalDataViewModel
 import com.example.xmltools.ViewModels.WithdrawalType_VM.WithdrawalTypeViewModel
+import com.example.xmltools.creating_realm_data.Realm_WithdrawalType.SaveWithdrawalType
 import com.example.xmltools.creating_realm_data.Realm_Withdrawal_LocalData.SavingWithdrawalData
 import com.example.xmltools.ui.theme.AppStyle
 import com.example.xmltools.ui.theme.black
@@ -75,7 +79,9 @@ import com.example.xmltools.ui.theme.skyBlue
 import com.example.xmltools.ui.theme.sky_blue
 import com.example.xmltools.ui.theme.white
 import com.money.trackpay.R
+import io.realm.kotlin.Realm
 import io.realm.kotlin.ext.query
+import org.mongodb.kbson.ObjectId
 import readexpro_medium
 import java.util.Calendar
 
@@ -84,7 +90,10 @@ fun Compact_Edit(navController: NavHostController, id: String) {
     Scaffold(
         modifier = Modifier
             .navigationBarsPadding()
-            .systemBarsPadding()
+            .systemBarsPadding(),
+        bottomBar = {
+            BannerADS(modifier = Modifier)
+        }
     ) { innerpadding ->
         Image(
             modifier = Modifier
@@ -97,6 +106,7 @@ fun Compact_Edit(navController: NavHostController, id: String) {
     }
 }
 
+
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 private fun Compact_EditBody(
@@ -104,25 +114,27 @@ private fun Compact_EditBody(
     idd: String,
     modifier: Modifier = Modifier
 ) {
-    val realm = remember { SavingWithdrawalData.realmWithdrawal }
+    val context = LocalContext.current
+
+    //3 here we get data :
+    val realmWithdrawalData = remember { SavingWithdrawalData.realmWithdrawal }
     val allData = remember {
-        realm.query<Withdrawal_Data>(
+        realmWithdrawalData.query<Withdrawal_Data>(
             "id == $0",
             org.mongodb.kbson.ObjectId(idd)
         ).first().find()
     }
     val withdrawalDataViewModel: WithdrawalDataViewModel = viewModel()
-    val context = LocalContext.current
+
+    //3 here we get types :
     val withdrawalTypeViewModel: WithdrawalTypeViewModel = viewModel()
     val oldWithdrawalType by withdrawalTypeViewModel.withdrawalTypesFlow.collectAsState(initial = emptyList())
-
+    var getOldType by rememberSaveable { mutableStateOf("") }
 
     var withdrawalAmount by rememberSaveable { mutableStateOf(allData!!.amount.toString()) }
-
     var days by rememberSaveable { mutableStateOf(allData!!.day) }
     var months by rememberSaveable { mutableStateOf(allData!!.month) }
     var years by rememberSaveable { mutableStateOf(allData!!.year) }
-
     var item by rememberSaveable { mutableStateOf(allData!!.items) }
     var withdrawalTypes by rememberSaveable { mutableStateOf(allData!!.type) }
 
@@ -237,6 +249,7 @@ private fun Compact_EditBody(
                         containerColor = dark_blue_shadow,
                     ) {
                         oldWithdrawalType.forEach { theTypes ->
+                            //` the menu of types :
                             DropdownMenuItem(
                                 text = {
                                     Row(
@@ -363,6 +376,8 @@ private fun Compact_EditBody(
                 .padding(10.dp),
             onClick = {
 
+                ImageADS(context = context)//4 here we add image ads \\
+
                 val amountValue = withdrawalAmount.toDoubleOrNull()
 
                 if (withdrawalTypes.isNotEmpty() && amountValue != null && days > 0 && withdrawalTypes != "إضافة شئ اخر + ") {
@@ -376,7 +391,14 @@ private fun Compact_EditBody(
                         year = years
                         date = "$day/$month/$year"
                     }
-                    withdrawalTypeViewModel.addWithdrawalType(context, withdrawalTypes)
+                    //3 chicking if this type is in tha data we will edit it , else we will add it in new type :
+                    oldWithdrawalType.forEach { oldType ->
+                        getOldType = oldType.WithdrawalType
+                    }
+                    if (withdrawalTypes != getOldType) {
+                        withdrawalTypeViewModel.addWithdrawalType(context, withdrawalTypes)
+                    }
+                    //3 adding new data :
                     withdrawalDataViewModel.editData(
                         locateDataBase = withdrawalData,
                         context = context,
@@ -444,7 +466,7 @@ private fun DatePickerModel(
         colors = DatePickerDefaults.colors(
             containerColor = AppStyle.dialogColor
         ),
-        onDismissRequest = {onDismissButton()},
+        onDismissRequest = { onDismissButton() },
         confirmButton = {
             Row(
                 modifier = Modifier
@@ -497,7 +519,7 @@ private fun DatePickerModel(
                 todayDateBorderColor = red,
 
                 yearContentColor = white,
-                currentYearContentColor=white,
+                currentYearContentColor = white,
                 selectedYearContentColor = black,
                 selectedYearContainerColor = blueLight,
 

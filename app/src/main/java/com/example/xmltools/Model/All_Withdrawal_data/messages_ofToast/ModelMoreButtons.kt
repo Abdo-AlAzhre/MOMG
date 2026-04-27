@@ -1,4 +1,4 @@
-package com.example.xmltools.Model.All_Locale_data.messages_ofToast
+package com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast
 
 data class ModelMoreButtons(
     val text: String,

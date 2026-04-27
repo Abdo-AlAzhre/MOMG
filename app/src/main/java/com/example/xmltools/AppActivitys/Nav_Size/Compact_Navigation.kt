@@ -1,4 +1,4 @@
-package com.example.xmltools.AppActivity.Compact.Portrait
+package com.example.xmltools.AppActivitys.Nav_Size
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -9,21 +9,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.xmltools.AppActivity.Compact.Portrait.HomeActivitys.Add_Edit.Compact_AddNewItems
-import com.example.xmltools.AppActivity.Compact.Portrait.HomeActivitys.Compact_Annual
-import com.example.xmltools.AppActivity.Compact.Portrait.HomeActivitys.Add_Edit.Compact_Edit
-import com.example.xmltools.AppActivity.Compact.Portrait.HomeActivitys.Home_MoreInfo.Compact_Home
-import com.example.xmltools.AppActivity.Compact.Portrait.HomeActivitys.Monthly_Setting.Compact_Monthly
-import com.example.xmltools.AppActivity.Compact.Portrait.HomeActivitys.Monthly_Setting.Compact_Setting
-import com.example.xmltools.AppActivity.Compact.Portrait.HomeActivitys.Home_MoreInfo.Compact_ShowMoreInfo
-import com.example.xmltools.AppActivity.Compact.Portrait.LogInActivitys.Login_Signin.Compact_Login
-import com.example.xmltools.AppActivity.Compact.Portrait.LogInActivitys.First_Passowrd.Compact_Password
-import com.example.xmltools.AppActivity.Compact.Portrait.LogInActivitys.Login_Signin.Compact_SignIn
-import com.example.xmltools.AppActivity.Compact.Portrait.LogInActivitys.First_Passowrd.FirstActivity
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Category_Annual.CategoryInventory
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Category_Annual.Compact_Annual
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Deposit_Add_Edit.Add_Deposit
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Deposit_Add_Edit.Edit_Deposit
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Home_MoreInfo.Compact_Home
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Home_MoreInfo.Deposit_Information
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Home_MoreInfo.Withdrawal_Information
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Monthly_Setting.Compact_Monthly
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Monthly_Setting.Compact_Setting
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Withdrawal_Add_Edit.Compact_AddNewItems
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Withdrawal_Add_Edit.Compact_Edit
+import com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.FirstActivity.FirstActivity
 import com.example.xmltools.ViewModels.Guest_VM.GuestViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.firebase.auth.FirebaseAuth
@@ -32,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun Compact_Nav() {
+
 
     val navController = rememberNavController()
     val auth = FirebaseAuth.getInstance()
@@ -49,27 +52,14 @@ fun Compact_Nav() {
         }
     }
 
-    val startDestination = if (currentUser != null) {
-        "Compact_home"
-    } else {
-        "Compact_first"
-    }
+
+
 
     if (enterDestination != null) {
         AnimatedNavHost(
-            navController = navController, startDestination = enterDestination!!,
+            navController = navController, startDestination =enterDestination!!,
         ) {
-            composable("Compact_login", enterTransition = {
-                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }, exitTransition = {
-                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }, popEnterTransition = {
-                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }, popExitTransition = {
-                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }) {
-                Compact_Login(navController)
-            }
+
             composable("Compact_first", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -92,28 +82,7 @@ fun Compact_Nav() {
             }) {
                 Compact_Home(navController)
             }
-            composable("Compact_Signin", enterTransition = {
-                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }, exitTransition = {
-                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }, popEnterTransition = {
-                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }, popExitTransition = {
-                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }) {
-                Compact_SignIn(navController)
-            }
-            composable("Compact_password", enterTransition = {
-                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }, exitTransition = {
-                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }, popEnterTransition = {
-                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }, popExitTransition = {
-                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
-            }) {
-                Compact_Password(navController)
-            }
+
             composable("Compact_setting", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -147,6 +116,17 @@ fun Compact_Nav() {
             }) {
                 Compact_Annual(navController)
             }
+            composable("Compact_category", enterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }, exitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }, popEnterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }, popExitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }) {
+                CategoryInventory(navController)
+            }
             composable("Compact_add", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -174,7 +154,7 @@ fun Compact_Nav() {
                     slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
                 }) { backStackEntry ->
                 val id = backStackEntry.arguments?.getString("id") ?: ""
-                Compact_ShowMoreInfo(navController, id)
+                Withdrawal_Information(navController, id)
             }
 
             composable(
@@ -195,6 +175,57 @@ fun Compact_Nav() {
                 val id = backstack.arguments?.getString("id") ?: ""
                 Compact_Edit(navController, id)
             }
+
+            composable("Compact_add_deposit", enterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }, exitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }, popEnterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }, popExitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }) {
+                Add_Deposit(navController =  navController)
+            }
+            composable(
+                "edit_deposit/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.StringType }),
+                enterTransition = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                },
+                exitTransition = {
+                    slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                },
+                popEnterTransition = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                },
+                popExitTransition = {
+                    slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                }) { backstack ->
+                val id = backstack.arguments?.getString("id") ?: ""
+                Edit_Deposit(modifier = Modifier ,navController, id)
+            }
+            composable(
+                "info_deposit/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.StringType }),
+                enterTransition = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                },
+                exitTransition = {
+                    slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                },
+                popEnterTransition = {
+                    slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                },
+                popExitTransition = {
+                    slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+                }) { backstack ->
+                val id = backstack.arguments?.getString("id") ?: ""
+                Deposit_Information(modifier = Modifier, navController, id)
+            }
+
+
         }
     }
 }
+

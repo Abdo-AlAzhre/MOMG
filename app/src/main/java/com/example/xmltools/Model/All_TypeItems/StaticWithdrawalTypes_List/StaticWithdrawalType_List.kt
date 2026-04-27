@@ -1,6 +1,6 @@
-package com.example.xmltools.Model.All_TypeItems.StaticTypes_List
+package com.example.xmltools.Model.All_TypeItems.StaticWithdrawalTypes_List
 
-object StaticType_List {
+object StaticWithdrawalType_List {
 
     val listOfType: List<String>
         get() = listOf(

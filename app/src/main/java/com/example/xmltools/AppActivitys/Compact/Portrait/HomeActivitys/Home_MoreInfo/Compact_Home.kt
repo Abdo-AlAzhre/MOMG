@@ -6,7 +6,9 @@
 
 package com.example.xmltools.AppActivitys.Compact.Portrait.HomeActivitys.Home_MoreInfo
 
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -30,6 +32,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -63,6 +66,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -71,6 +75,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import cairo_bold
+import com.example.xmltools.AppADS.ImageADS
 import com.example.xmltools.Model.All_Withdrawal_data.ModelNavigationItems
 import com.example.xmltools.Model.All_Withdrawal_data.messages_ofToast.ModelMoreButtons
 import com.example.xmltools.ViewModels.DepositDataViewModel.DepositDataViewModel
@@ -79,6 +85,8 @@ import com.example.xmltools.ViewModels.Deposit_and_Withdrawal.TransactionUiModel
 import com.example.xmltools.ViewModels.Withdrawal_data_VM.WithdrawalDataViewModel
 import com.example.xmltools.ui.theme.AppStyle
 import com.example.xmltools.ui.theme.black
+import com.example.xmltools.ui.theme.darkRed
+import com.example.xmltools.ui.theme.forestGreen
 import com.example.xmltools.ui.theme.green
 import com.example.xmltools.ui.theme.noColor
 import com.money.trackpay.R
@@ -88,29 +96,30 @@ import readexpro_medium
 
 @Composable
 fun Compact_Home(navController: NavHostController) {
-
+    val context = LocalContext.current
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
     val setting = stringResource(R.string.setting)
     val monthly = stringResource(R.string.monthly_inventory)
     val annual = stringResource(R.string.annual_inventory)
+    val category = stringResource(R.string.category_inventory)
 
-
+    //4 this is the list of the the Activitys of the ModelNavigations :
     val ModelNavigationItemsList = listOf(
         ModelNavigationItems(
             title = stringResource(R.string.setting), icon = R.drawable.settings
-        ),
-        ModelNavigationItems(
+        ), ModelNavigationItems(
             title = stringResource(R.string.monthly_inventory),
             icon = R.drawable.baseline_assignment_24
-        ),
-        ModelNavigationItems(
+        ), ModelNavigationItems(
             title = stringResource(R.string.annual_inventory),
             icon = R.drawable.baseline_bar_chart_24
-        ),
-
+        ), ModelNavigationItems(
+            title = stringResource(R.string.category_inventory),
+            icon = R.drawable.category_inventory
         )
+    )
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -132,6 +141,7 @@ fun Compact_Home(navController: NavHostController) {
                             shape = RoundedCornerShape(bottomEnd = 16.dp, bottomStart = 16.dp)
                         )
                 ) {
+                    //` the name and icon of the App :
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -167,6 +177,7 @@ fun Compact_Home(navController: NavHostController) {
 
                     }
                     Spacer(modifier = Modifier.padding(vertical = 32.dp))
+                    //` this lazyColumn is for show user anuther Activitys :
                     LazyColumn {
                         items(ModelNavigationItemsList) {
                             Card(
@@ -174,10 +185,31 @@ fun Compact_Home(navController: NavHostController) {
                                     .fillMaxWidth()
                                     .padding(horizontal = 12.dp),
                                 onClick = {
+                                    ImageADS(context = context)//4 here we add image ads \\
                                     when (it.title) {
-                                        setting -> navController.navigate("Compact_setting")
-                                        monthly -> navController.navigate("Compact_monthly")
-                                        annual -> navController.navigate("Compact_annual")
+                                        setting -> navController.navigate("Compact_setting") {
+                                            popUpTo("Compact_home") {
+
+                                            }
+                                        }
+
+                                        monthly -> navController.navigate("Compact_monthly") {
+                                            popUpTo("Compact_home") {
+
+                                            }
+                                        }
+
+                                        annual -> navController.navigate("Compact_annual") {
+                                            popUpTo("Compact_home") {
+
+                                            }
+                                        }
+
+                                        category -> navController.navigate("Compact_category") {
+                                            popUpTo("Compact_home") {
+
+                                            }
+                                        }
                                     }
                                 },
                                 colors = CardDefaults.cardColors(
@@ -217,7 +249,7 @@ fun Compact_Home(navController: NavHostController) {
             }
         },
     ) {
-
+        //~ and here we show the main Activity , the home Activity :
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
@@ -246,12 +278,61 @@ fun Compact_Home(navController: NavHostController) {
 
 @Composable
 private fun Compact_homeTopBar(function: () -> Unit) {
+    //1 this is withdrawal viewModel :
+    val withdrawalDataViewModel: WithdrawalDataViewModel = viewModel()
+    val allDataWithdrawal by withdrawalDataViewModel.withdrawalDataFlow.collectAsState()
+    //1 this is deposit viewModel :
+    val depositDataViewModel: DepositDataViewModel = viewModel()
+    val allDataDeposit by depositDataViewModel.depositDataFlow.collectAsState()
+    //4 here we calculate the remaining balance of withdrawal and deposit :
+    val amountOfDeposit = allDataDeposit.sumOf { it.depositAmount }
+    val amountOfWithdrawal = allDataWithdrawal.sumOf { it.amount }
+    val theResult = amountOfDeposit - amountOfWithdrawal
+    //` this is the Percentage of the (withdrawal/Depsoit) :
+    val percentage = if (amountOfDeposit != 0.0) {
+        (amountOfWithdrawal / amountOfDeposit).toFloat()
+    } else {
+        0f
+    }
+    //` the animation of the progress :
+    val animationOfProgress by animateFloatAsState(
+        targetValue = percentage,
+        animationSpec = tween(
+            durationMillis = 8500, easing = FastOutSlowInEasing
+        ),
+    )
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(color = noColor),
 
         ) {
+        //~ here we show the user the total he have new :
+        Row(
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(horizontal = 12.dp, vertical = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+
+            ) {
+            Text(
+                modifier = Modifier.padding(horizontal = 6.dp),
+                text = "${stringResource(R.string.total_amount)}: $theResult ",
+                color = AppStyle.textColor2,
+                fontFamily = cairo_bold
+            )
+            CircularProgressIndicator(
+                modifier = Modifier.size(42.dp),
+                progress = { animationOfProgress },
+                color = darkRed,
+                trackColor = forestGreen,
+                strokeWidth = 6.dp,
+
+                )
+        }
+
+        //~ this is the button of menu :
         IconButton(
             modifier = Modifier.align(Alignment.CenterStart),
             onClick = { function() },
@@ -273,15 +354,19 @@ private fun Compact_HomeBody(modifier: Modifier = Modifier, navController: NavHo
 
     //1 this is withdrawal viewModel :
     val withdrawalDataViewModel: WithdrawalDataViewModel = viewModel()
+
     //1 this is deposit viewModel :
     val depositDataViewModel: DepositDataViewModel = viewModel()
+
     //1 this is all data viewModel :
     val allDataViewModel: DepositAndWithdrawalViewModel = viewModel()
-    val allData by allDataViewModel.ALL_DATA.collectAsState()
+    val allDataDepsitAndWithdrawal by allDataViewModel.ALL_DATA.collectAsState()
 
     //2 We using this to filter withdrawal by Category and Date:
     var searchText by rememberSaveable { mutableStateOf("") }
-    val searchFromWithdrawalData by withdrawalDataViewModel.dataFlow.collectAsState(initial = emptyList())
+    val searchFromWithdrawalData by withdrawalDataViewModel.withdrawalDataFlow.collectAsState(
+        initial = emptyList()
+    )
     val filteredWithdrawalByCategory = if (searchText.isEmpty()) {
         emptyList()
     } else searchFromWithdrawalData.filter { item ->
@@ -292,15 +377,14 @@ private fun Compact_HomeBody(modifier: Modifier = Modifier, navController: NavHo
         )
     }
     //2 filter deposit by category and date :
-    val searchFromDeposit by depositDataViewModel.depositDataFlow.collectAsState(initial = emptyList())
+    val filterDeposit by depositDataViewModel.depositDataFlow.collectAsState(initial = emptyList())
     val theDepositFilter = if (searchText.isEmpty()) {
         emptyList()
-    } else searchFromDeposit.filter { item ->
+    } else filterDeposit.filter { item ->
         val category = item.depositType
         val date = item.date
         category.contains(searchText, ignoreCase = true) || date.contains(
-            searchText,
-            ignoreCase = true
+            searchText, ignoreCase = true
         )
     }
 
@@ -330,8 +414,9 @@ private fun Compact_HomeBody(modifier: Modifier = Modifier, navController: NavHo
         verticalArrangement = Arrangement.Center,
 
         ) {
+
         //3 here we show button and outLineTextFiald of Searhcing :
-        Spacer(modifier = Modifier.height(12.dp))
+
         if (showTextFieldOfSearch) {
             Row(
                 modifier = Modifier
@@ -359,8 +444,7 @@ private fun Compact_HomeBody(modifier: Modifier = Modifier, navController: NavHo
                 Spacer(modifier = Modifier.width(6.dp))
                 Column(
                     modifier = Modifier.weight(2f),
-                )
-                {
+                ) {
                     DockedSearchBar(
                         query = searchText,
                         onQueryChange = { searchText = it },
@@ -410,8 +494,7 @@ private fun Compact_HomeBody(modifier: Modifier = Modifier, navController: NavHo
                     }
                     .padding(horizontal = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Absolute.Center)
-            {
+                horizontalArrangement = Arrangement.Absolute.Center) {
                 Button(
                     modifier = Modifier.fillMaxWidth(), onClick = {
                         showTextFieldOfSearch = true
@@ -432,10 +515,13 @@ private fun Compact_HomeBody(modifier: Modifier = Modifier, navController: NavHo
                 }
             }
         }
+
+        Spacer(modifier = Modifier.height(6.dp))
+
         LazyColumn(
             modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            //3 searsh in withdrawal items :
+            //3 search in withdrawal items :
             if (showTextFieldOfSearch) {
                 items(filteredWithdrawalByCategory) { withdrawal_Data ->
                     Card(
@@ -683,7 +769,7 @@ private fun Compact_HomeBody(modifier: Modifier = Modifier, navController: NavHo
             }
             //3 here we show all items :
             else {
-                items(allData) { localeData ->
+                items(allDataDepsitAndWithdrawal) { localeData ->
                     when (localeData) {
                         //3 here we show deposit itemms :
                         is TransactionUiModel.Deposit -> {
@@ -694,7 +780,8 @@ private fun Compact_HomeBody(modifier: Modifier = Modifier, navController: NavHo
                                         this.scaleY = animation_ListHome
                                     }
                                     .fillMaxWidth()
-                                    .padding(12.dp), colors = CardDefaults.cardColors(
+                                    .padding(12.dp),
+                                colors = CardDefaults.cardColors(
                                     containerColor = AppStyle.cardColor
                                 )) {
                                 Column(
@@ -818,7 +905,8 @@ private fun Compact_HomeBody(modifier: Modifier = Modifier, navController: NavHo
                                         this.scaleY = animation_ListHome
                                     }
                                     .fillMaxWidth()
-                                    .padding(12.dp), colors = CardDefaults.cardColors(
+                                    .padding(12.dp),
+                                colors = CardDefaults.cardColors(
                                     containerColor = AppStyle.cardColor
                                 )) {
                                 Column(
@@ -947,7 +1035,7 @@ private fun Compact_HomeFloatActionButton(
     onAddExpenses: () -> Unit,
     onAddMoneySave: () -> Unit,
 ) {
-
+    val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
     val fadItems = listOf<ModelMoreButtons>(
         ModelMoreButtons(
@@ -958,8 +1046,7 @@ private fun Compact_HomeFloatActionButton(
         ),
     )
     FloatingActionButtonMenu(
-        expanded = expanded,
-        button = {
+        expanded = expanded, button = {
             Button(
                 modifier = Modifier.alpha(0.90f),
                 onClick = {
@@ -993,6 +1080,7 @@ private fun Compact_HomeFloatActionButton(
         fadItems.forEach { items ->
             FloatingActionButtonMenuItem(
                 onClick = {
+                    ImageADS(context = context) //4 here we add image ads \\
                     when (items.icon) {
                         R.drawable.deposit_icons -> {
                             navController.navigate("Compact_add_deposit") {
@@ -1006,19 +1094,16 @@ private fun Compact_HomeFloatActionButton(
                             }
                         }
                     }
-                },
-                text = {
+                }, text = {
                     Text(text = items.text, color = AppStyle.textColor2)
-                },
-                icon = {
+                }, icon = {
                     Icon(
                         modifier = Modifier.size(20.dp),
                         painter = painterResource(items.icon),
                         contentDescription = null,
                         tint = black
                     )
-                },
-                containerColor = AppStyle.buttonColor
+                }, containerColor = AppStyle.buttonColor
             )
         }
     }

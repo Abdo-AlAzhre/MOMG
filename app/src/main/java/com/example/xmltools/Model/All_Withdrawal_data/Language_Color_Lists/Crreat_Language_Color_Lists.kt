@@ -1,4 +1,4 @@
-package com.example.xmltools.Model.All_Locale_data.Language_Color_Lists
+package com.example.xmltools.Model.All_Withdrawal_data.Language_Color_Lists
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource

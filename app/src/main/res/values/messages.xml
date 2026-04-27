@@ -1,3 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="make_sure_of_entering_all_data"> Make sure to enter all data</string>
+    <string name="make_sure_of_enter_email"> You need to enter your email</string>
+    <string name="category_added_successfully"> Category added successfully</string>
+
+    <string name="amount_must_be_more_then_0">Amount must be more then 0 !</string>
+    <string name="add_category_name_to_continue">You need to add category name to continue</string>
+    <string name="saving">Saving</string>
+
+    <string name="successfully_saving">Saving successfully</string>
+    <string name="deleting">Deleting</string>
+    <string name="deleting_successfully">Deleting successfully</string>
+
+    <string name="data_recovery">Data recovery</string>
+    <string name="data_has_been__recovered">rest your app</string>
+    <string name="no_data">We can’t find any data</string>
+
+    <string name="you_need_to_mack_sure_of_your_data"> make sure to enter the right info</string>
+    <string name="entering"> Entering</string>
+    <string name="welcome_back">Welcome</string>
+
+    <string name="try_again_later">Try again later</string>
+    <string name="creating_new_account">Creating a new account</string>
+    <string name="data_is_being_saved_before_exiting">Data is saved before exiting</string>
+
+    <string name="see_you_again">See you again</string>
+    <string name="try_again">Try again</string>
+    <string name="sending_the_code">Sending code</string>
+
+    <string name="check_your_mail">Check your email</string>
+    <string name="the_code_was_not_sent_try_again">The code wasn’t sent try again</string>
+    <string name="make_sure_the_amount_is_in_numbers_only">numbers only !</string>
+
+    <string name="you_forgot_to_add_category">You forgot to add category</string>
+
+
+
+
 </resources>

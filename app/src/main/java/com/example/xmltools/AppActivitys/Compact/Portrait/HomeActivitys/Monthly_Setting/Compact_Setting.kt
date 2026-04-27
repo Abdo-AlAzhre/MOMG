@@ -53,6 +53,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import cairo_medium
+import com.example.xmltools.AppADS.BannerADS
+import com.example.xmltools.AppADS.ImageADS
 import com.example.xmltools.ViewModels.DepositDataViewModel.DepositDataViewModel
 import com.example.xmltools.ViewModels.DepositType_VM.DepositTypeViewModel
 import com.example.xmltools.ViewModels.WithdrawalType_VM.WithdrawalTypeViewModel
@@ -75,16 +77,9 @@ fun Compact_Setting(navController: NavHostController) {
             .fillMaxSize()
             .systemBarsPadding()
             .navigationBarsPadding()
-            .background(crem_color),
-        bottomBar = {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.vertion),
-                textAlign = TextAlign.Center,
-                color = AppStyle.textColor2,
-            )
-        }
-    ) { innerpadding ->
+            .background(crem_color), bottomBar = {
+            BannerADS(modifier = Modifier)
+        }) { innerpadding ->
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(R.drawable.ferst_background),
@@ -148,24 +143,32 @@ private fun Compact_SettingBody(modifier: Modifier = Modifier, navController: Na
 
         }
         Spacer(modifier = Modifier.padding(vertical = 12.dp))
-
-        Row(
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Absolute.Center
         ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Absolute.Center
+            ) {
 
-            Spacer(modifier = Modifier.padding(horizontal = 8.dp))
-            Image(
-                modifier = Modifier.size(120.dp),
-                painter = painterResource(R.drawable.app_icons),
-                contentDescription = "",
+                Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                Image(
+                    modifier = Modifier.size(120.dp),
+                    painter = painterResource(R.drawable.app_icons),
+                    contentDescription = "",
 
-                )
+                    )
 
+            }
+            Spacer(modifier = Modifier.padding(horizontal = 6.dp))
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.vertion),
+                textAlign = TextAlign.Center,
+                color = AppStyle.textColor2,
+            )
         }
-
-        Spacer(modifier = Modifier.padding(vertical = 22.dp))
 
         Spacer(modifier = Modifier.height(32.dp))
         Row(
@@ -181,6 +184,7 @@ private fun Compact_SettingBody(modifier: Modifier = Modifier, navController: Na
             //~ this button to get data and recover it :
             Button(
                 modifier = Modifier.padding(vertical = 12.dp), onClick = {
+                    ImageADS(context = context)//4 here we add image ads \\
                     changeReceiver = true
 
                     depositDataViewModel.restoreDepositData(context)
@@ -210,8 +214,8 @@ private fun Compact_SettingBody(modifier: Modifier = Modifier, navController: Na
             }
             //~ this button to save data in anuther dataBase :
             Button(
-                modifier = Modifier.padding(vertical = 12.dp),
-                onClick = {
+                modifier = Modifier.padding(vertical = 12.dp), onClick = {
+                    ImageADS(context = context)//4 here we add image ads \\
                     changeBackUp = true
 
                     depositDataViewModel.bacupDepositData(context)
@@ -258,11 +262,9 @@ private fun Compact_SettingBody(modifier: Modifier = Modifier, navController: Na
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Button(
-                modifier = Modifier,
-                onClick = {
+                modifier = Modifier, onClick = {
                     showCategoryList = !showCategoryList
-                },
-                colors = ButtonDefaults.buttonColors(
+                }, colors = ButtonDefaults.buttonColors(
                     containerColor = AppStyle.buttonColor
                 )
             ) {
@@ -312,11 +314,9 @@ private fun Compact_SettingBody(modifier: Modifier = Modifier, navController: Na
                                 fontFamily = cairo_medium,
                             )
                             IconButton(
-                                modifier = Modifier.weight(1f),
-                                onClick = {
+                                modifier = Modifier.weight(1f), onClick = {
                                     withdrawalTypeViewModel.deleteType(context, withdrawalTypes.id)
-                                }
-                            ) {
+                                }) {
                                 Icon(
                                     painter = painterResource(R.drawable.baseline_delete_24),
                                     contentDescription = null,
@@ -348,11 +348,9 @@ private fun Compact_SettingBody(modifier: Modifier = Modifier, navController: Na
                                 fontFamily = cairo_medium,
                             )
                             IconButton(
-                                modifier = Modifier.weight(1f),
-                                onClick = {
-                                    depositTypeViewModel.deleteDepositType(context , depositTypes.id)
-                                }
-                            ) {
+                                modifier = Modifier.weight(1f), onClick = {
+                                    depositTypeViewModel.deleteDepositType(context, depositTypes.id)
+                                }) {
                                 Icon(
                                     painter = painterResource(R.drawable.baseline_delete_24),
                                     contentDescription = null,

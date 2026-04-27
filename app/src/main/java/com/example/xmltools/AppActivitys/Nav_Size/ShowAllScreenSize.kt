@@ -1,10 +1,9 @@
-package com.example.xmltools.AppActivity
+package com.example.xmltools.AppActivitys.Nav_Size
 
 import androidx.compose.runtime.Composable
-import com.example.xmltools.AppActivity.Compact.Portrait.Compact_Nav
-import com.example.xmltools.AppActivity.flixScreen.OrientationType
-import com.example.xmltools.AppActivity.flixScreen.RememberDeviceInfo
-import com.example.xmltools.AppActivity.flixScreen.WindowType
+import com.example.xmltools.AppActivitys.flixScreen.OrientationType
+import com.example.xmltools.AppActivitys.flixScreen.RememberDeviceInfo
+import com.example.xmltools.AppActivitys.flixScreen.WindowType
 
 @Composable
 fun ShowScreens() {

@@ -4,4 +4,7 @@
     <string name="set_data">"Set date "</string>
     <string name="enter_the_date">Enter the transaction date</string>
     <string name="dont_forget_date">you forget to add date</string>
+    <string name="security">Security</string>
+    <string name="identiy_verification_before_enter">Identiy verification before enter</string>
+    <string name="enter">Enter</string>
 </resources>

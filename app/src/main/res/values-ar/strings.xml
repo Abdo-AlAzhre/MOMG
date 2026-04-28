@@ -90,4 +90,7 @@
     <string name="set_data">إضافة التاريخ</string>
     <string name="enter_the_date">اضف تاريخ العملية</string>
     <string name="dont_forget_date">لقد نسيت ادخال التاريخ</string>
+    <string name="security">الامان</string>
+    <string name="identiy_verification_before_enter">يجب التحقق من هوية المستخدم قبل الدخول</string>
+    <string name="enter">دخول</string>
 </resources>

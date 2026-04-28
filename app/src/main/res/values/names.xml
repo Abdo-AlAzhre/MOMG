@@ -80,10 +80,12 @@
     <string name="theme">Theme</string>
     <string name="language">Language</string>
 
-    <string name="dark_mode">Dark mode</string>
+    <string name="dark_mode" translatable="false">Dark mode</string>
     <string name="light_mode">Light mode</string>
-    <string name="vertion" translatable="false"> vertion : 1.0.5</string>
+    <string name="vertion" translatable="false">" vertion : 1.0.7"</string>
 
     <string name="category_edit">Withdrawal category edit</string>
+
+
 
 </resources>

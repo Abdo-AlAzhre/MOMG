@@ -91,7 +91,7 @@ class LocalAuthManager(
 
         )
 
-
+        prompt.authenticate(promptInfo.build()) //1 finaly here we build the auth to use
     }
 
 

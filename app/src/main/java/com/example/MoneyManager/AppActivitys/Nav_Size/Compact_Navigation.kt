@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.MoneyManager.AppActivitys.Compact.Portrait.HomeActivitys.Category_Annual.CategoryInventory
 import com.example.MoneyManager.AppActivitys.Compact.Portrait.HomeActivitys.Category_Annual.Compact_Annual
+import com.example.MoneyManager.AppActivitys.Compact.Portrait.HomeActivitys.Compact_SendMoney.CompactSendMoney
 import com.example.MoneyManager.AppActivitys.Compact.Portrait.HomeActivitys.Deposit_Add_Edit.Add_Deposit
 import com.example.MoneyManager.AppActivitys.Compact.Portrait.HomeActivitys.Deposit_Add_Edit.Edit_Deposit
 import com.example.MoneyManager.AppActivitys.Compact.Portrait.HomeActivitys.Home_MoreInfo.Compact_Home
@@ -57,7 +58,7 @@ fun Compact_Nav() {
 
     if (enterDestination != null) {
         AnimatedNavHost(
-            navController = navController, startDestination =enterDestination!!,
+            navController = navController, startDestination = enterDestination!!,
         ) {
 
             composable("Compact_first", enterTransition = {
@@ -71,6 +72,21 @@ fun Compact_Nav() {
             }) {
                 FirstActivity(navController)
             }
+
+
+            composable("Compact_sendMoney", enterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }, exitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }, popEnterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }, popExitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
+            }) {
+                CompactSendMoney(navController = navController)
+            }
+
+
             composable("Compact_home", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -83,6 +99,7 @@ fun Compact_Nav() {
                 Compact_Home(navController)
             }
 
+
             composable("Compact_setting", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -94,6 +111,8 @@ fun Compact_Nav() {
             }) {
                 Compact_Setting(navController)
             }
+
+
             composable("Compact_monthly", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -105,6 +124,8 @@ fun Compact_Nav() {
             }) {
                 Compact_Monthly(navController)
             }
+
+
             composable("Compact_annual", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -116,6 +137,8 @@ fun Compact_Nav() {
             }) {
                 Compact_Annual(navController)
             }
+
+
             composable("Compact_category", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -127,6 +150,8 @@ fun Compact_Nav() {
             }) {
                 CategoryInventory(navController)
             }
+
+
             composable("Compact_add", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -138,6 +163,8 @@ fun Compact_Nav() {
             }) {
                 Compact_AddNewItems(navController)
             }
+
+
             composable(
                 "Compact_showmoreinfo/{id}",
                 arguments = listOf(navArgument("id") { type = NavType.StringType }),
@@ -156,6 +183,7 @@ fun Compact_Nav() {
                 val id = backStackEntry.arguments?.getString("id") ?: ""
                 Withdrawal_Information(navController, id)
             }
+
 
             composable(
                 "Compact_edit/{id}",
@@ -176,6 +204,7 @@ fun Compact_Nav() {
                 Compact_Edit(navController, id)
             }
 
+
             composable("Compact_add_deposit", enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }, exitTransition = {
@@ -185,8 +214,10 @@ fun Compact_Nav() {
             }, popExitTransition = {
                 slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
             }) {
-                Add_Deposit(navController =  navController)
+                Add_Deposit(navController = navController)
             }
+
+
             composable(
                 "edit_deposit/{id}",
                 arguments = listOf(navArgument("id") { type = NavType.StringType }),
@@ -203,8 +234,10 @@ fun Compact_Nav() {
                     slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left)
                 }) { backstack ->
                 val id = backstack.arguments?.getString("id") ?: ""
-                Edit_Deposit(modifier = Modifier ,navController, id)
+                Edit_Deposit(modifier = Modifier, navController, id)
             }
+
+
             composable(
                 "info_deposit/{id}",
                 arguments = listOf(navArgument("id") { type = NavType.StringType }),

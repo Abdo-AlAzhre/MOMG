@@ -104,6 +104,7 @@ fun Compact_Home(navController: NavHostController) {
     val monthly = stringResource(R.string.monthly_inventory)
     val annual = stringResource(R.string.annual_inventory)
     val category = stringResource(R.string.category_inventory)
+    val sendMoney = stringResource(R.string.send_money)
 
     //4 this is the list of the the Activitys of the ModelNavigations :
     val ModelNavigationItemsList = listOf(
@@ -118,6 +119,10 @@ fun Compact_Home(navController: NavHostController) {
         ), ModelNavigationItems(
             title = stringResource(R.string.category_inventory),
             icon = R.drawable.category_inventory
+        ),
+        ModelNavigationItems(
+            title = stringResource(R.string.send_money),
+            icon = R.drawable.send_money
         )
     )
 
@@ -206,6 +211,12 @@ fun Compact_Home(navController: NavHostController) {
                                         }
 
                                         category -> navController.navigate("Compact_category") {
+                                            popUpTo("Compact_home") {
+
+                                            }
+                                        }
+
+                                        sendMoney -> navController.navigate("Compact_sendMoney") {
                                             popUpTo("Compact_home") {
 
                                             }

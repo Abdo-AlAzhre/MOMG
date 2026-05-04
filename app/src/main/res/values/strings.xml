@@ -7,4 +7,5 @@
     <string name="security">Security</string>
     <string name="identiy_verification_before_enter">Identiy verification before enter</string>
     <string name="enter">Enter</string>
+    <string name="send_money">Send money</string>
 </resources>

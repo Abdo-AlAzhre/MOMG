@@ -94,4 +94,6 @@
     <string name="identiy_verification_before_enter">يجب التحقق من هوية المستخدم قبل الدخول</string>
     <string name="enter">دخول</string>
     <string name="send_money">ارسال نقود</string>
+    <string name="available">المتاح</string>
+    <string name="phone_number">رقم الهاتف</string>
 </resources>

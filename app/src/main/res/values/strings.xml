@@ -8,4 +8,6 @@
     <string name="identiy_verification_before_enter">Identiy verification before enter</string>
     <string name="enter">Enter</string>
     <string name="send_money">Send money</string>
+    <string name="available">Available</string>
+    <string name="phone_number">Phone Number</string>
 </resources>

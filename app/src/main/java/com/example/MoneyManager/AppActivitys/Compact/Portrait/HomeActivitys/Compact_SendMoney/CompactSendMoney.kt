@@ -116,7 +116,7 @@ private fun Body(modifier: Modifier = Modifier) {
     )
 
     var phoneNumber by rememberSaveable { mutableStateOf("") }
-
+    var theAmountYouWillSet by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -170,14 +170,17 @@ private fun Body(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp)
+                .padding(horizontal = 0.dp)
                 .border(
                     width = 1.dp,
                     color = snow_shadow
                 )
         ) {
+            //2 HERE WE GET THE PHONE NUMBER :
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 16.dp),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
@@ -204,11 +207,42 @@ private fun Body(modifier: Modifier = Modifier) {
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number
                     ),
-
-
-                    )
-
+                )
             }
+            //2 HERE WE GET THE AMOUNT THAT WILL BE SENT :
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 16.dp),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.the_amount_you_will_sent),
+                    color = AppStyle.textColor2,
+                    fontFamily = cairo_medium,
+                    fontSize = 12.sp
+                )
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = theAmountYouWillSet,
+                    onValueChange = { theAmountYouWillSet = it },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = blue_shadow,
+                        unfocusedContainerColor = blue_shadow,
+                        cursorColor = black,
+                    ),
+                    textStyle = TextStyle(
+                        color = AppStyle.textColor2,
+                        fontSize = 16.sp,
+                        fontFamily = cairo_medium
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number
+                    ),
+                )
+            }
+
         }
 
     }

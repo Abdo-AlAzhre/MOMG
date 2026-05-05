@@ -96,4 +96,5 @@
     <string name="send_money">ارسال نقود</string>
     <string name="available">المتاح</string>
     <string name="phone_number">رقم الهاتف</string>
+    <string name="the_amount_you_will_sent">المبلغ الذي سوف ترسله</string>
 </resources>

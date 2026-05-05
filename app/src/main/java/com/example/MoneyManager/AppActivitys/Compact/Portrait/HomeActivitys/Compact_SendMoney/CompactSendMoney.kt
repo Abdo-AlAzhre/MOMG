@@ -16,7 +16,14 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,6 +37,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,7 +62,11 @@ import com.example.MoneyManager.ui.theme.darkRed
 import com.example.MoneyManager.ui.theme.forestGreen
 import com.example.MoneyManager.ui.theme.gray
 import com.example.MoneyManager.ui.theme.noColor
+import com.example.MoneyManager.ui.theme.orange
+import com.example.MoneyManager.ui.theme.red
+import com.example.MoneyManager.ui.theme.snow
 import com.example.MoneyManager.ui.theme.snow_shadow
+import com.example.MoneyManager.ui.theme.white
 import com.money.trackpay.R
 
 @Composable
@@ -117,6 +129,14 @@ private fun Body(modifier: Modifier = Modifier) {
 
     var phoneNumber by rememberSaveable { mutableStateOf("") }
     var theAmountYouWillSet by rememberSaveable { mutableStateOf("") }
+
+
+    val listOfPaymentMethod = listOf<PAYMENTMETHOD>(
+        PAYMENTMETHOD(name = "Orange", color = orange, textColor = black),
+        PAYMENTMETHOD(name = "Vodafone", color = red, textColor = white),
+        PAYMENTMETHOD(name = "We", color = snow, textColor = black),
+    )
+
 
     Column(
         modifier = modifier
@@ -238,17 +258,48 @@ private fun Body(modifier: Modifier = Modifier) {
                         fontFamily = cairo_medium
                     ),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number
+                        keyboardType = KeyboardType.Text
                     ),
                 )
             }
+            //2 HERE USER SLECT PAYMENT METHOD :
 
+            LazyVerticalGrid(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                columns = GridCells.Fixed(3),
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                items(listOfPaymentMethod) {
+                    Button(
+                        onClick = {},
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = it.color
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text(
+                            text = it.name,
+                            color = it.textColor,
+                            fontSize = 12.sp
+                        )
+                    }
+                }
+
+            }
         }
 
     }
 
 
 }
+
+
+data class PAYMENTMETHOD(
+    val name: String,
+    val color: Color,
+    val textColor: Color
+)
+
 
 @Preview(showBackground = true)
 @Composable

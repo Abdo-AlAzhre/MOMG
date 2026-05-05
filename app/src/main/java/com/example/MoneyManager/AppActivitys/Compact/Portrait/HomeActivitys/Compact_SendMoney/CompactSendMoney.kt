@@ -31,12 +31,24 @@ fun CompactSendMoney(
             contentScale = ContentScale.Crop
 
         )
-        Body(modifier = Modifier.fillMaxSize().padding(paddingValues))
+        Body(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues))
     }
+
+}
+
+
+@Composable
+fun TobBar(modifier: Modifier = Modifier) {
 
 }
 
 @Composable
 private fun Body(modifier: Modifier = Modifier) {
+
+
+
+
 
 }

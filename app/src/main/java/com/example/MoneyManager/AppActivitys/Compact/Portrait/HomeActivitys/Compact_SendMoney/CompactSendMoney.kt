@@ -2,7 +2,6 @@ package com.example.MoneyManager.AppActivitys.Compact.Portrait.HomeActivitys.Com
 
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -16,14 +15,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -59,24 +55,21 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import cairo_bold
 import cairo_medium
+import com.example.MoneyManager.Model.All_Withdrawal_data.Withdrawal_Data
 import com.example.MoneyManager.ViewModels.DepositDataViewModel.DepositDataViewModel
 import com.example.MoneyManager.ViewModels.Withdrawal_data_VM.WithdrawalDataViewModel
 import com.example.MoneyManager.ui.theme.AppStyle
 import com.example.MoneyManager.ui.theme.Change_Style
 import com.example.MoneyManager.ui.theme.black
-import com.example.MoneyManager.ui.theme.blueLight
 import com.example.MoneyManager.ui.theme.blue_shadow
 import com.example.MoneyManager.ui.theme.darkRed
 import com.example.MoneyManager.ui.theme.forestGreen
-import com.example.MoneyManager.ui.theme.gray
 import com.example.MoneyManager.ui.theme.greenLight
-import com.example.MoneyManager.ui.theme.noColor
 import com.example.MoneyManager.ui.theme.orange
 import com.example.MoneyManager.ui.theme.red
 import com.example.MoneyManager.ui.theme.sky_blue
 import com.example.MoneyManager.ui.theme.snow
 import com.example.MoneyManager.ui.theme.snow_shadow
-import com.example.MoneyManager.ui.theme.softGreen
 import com.example.MoneyManager.ui.theme.white
 import com.money.trackpay.R
 
@@ -112,6 +105,9 @@ private fun Body(modifier: Modifier = Modifier) {
 
     val context = LocalContext.current
 
+    val the_amount_was_sent_to = stringResource(R.string.the_amount_was_sent_to)
+    val send_money = stringResource(R.string.send_money)
+
     //4 THIS IS ALL WITHDRAWAL DATA :
     val withdrawalDataViewModel: WithdrawalDataViewModel = viewModel()
     val allWithdrawalGetAllData by withdrawalDataViewModel.withdrawalDataFlow.collectAsState()
@@ -121,6 +117,7 @@ private fun Body(modifier: Modifier = Modifier) {
     val depositDataViewModel: DepositDataViewModel = viewModel()
     val allDepositData by depositDataViewModel.depositDataFlow.collectAsState()
     val sumOfDepositData = allDepositData.sumOf { it.depositAmount }
+
 
     //3 THIS IS THE RESULT OF ( DEPOSIT AND WITHDRAWAL ) :
     val theResult = sumOfDepositData - sumOfAllWithdrawalData
@@ -141,7 +138,7 @@ private fun Body(modifier: Modifier = Modifier) {
 
     var phoneNumber by rememberSaveable { mutableStateOf("") }
     var theAmountYouWillSet by rememberSaveable { mutableStateOf("") }
-    var thePhoneThatWeWillSend by rememberSaveable { mutableStateOf("") }
+    var THE_LASTVALE_WE_WILL_SEND by rememberSaveable { mutableStateOf("") }
     var makeSureOfUserInfo by rememberSaveable { mutableStateOf(false) }
     var selectedIndex by rememberSaveable { mutableStateOf(0) }
     val encodedHash = Uri.encode("#") //1 this value is to set (#) in Uri so we can send it easy
@@ -196,8 +193,7 @@ private fun Body(modifier: Modifier = Modifier) {
                 color = darkRed,
                 trackColor = forestGreen,
                 strokeWidth = 6.dp,
-
-                )
+            )
         }
 
         //1 HERE WE GET THE NUMBER THAT HE WILL SEND MONEY TO :
@@ -227,6 +223,7 @@ private fun Body(modifier: Modifier = Modifier) {
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = phoneNumber,
+                    singleLine = true,
                     onValueChange = { phoneNumber = it },
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = blue_shadow,
@@ -258,6 +255,7 @@ private fun Body(modifier: Modifier = Modifier) {
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = theAmountYouWillSet,
+                    singleLine = true,
                     onValueChange = { theAmountYouWillSet = it },
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = blue_shadow,
@@ -290,31 +288,8 @@ private fun Body(modifier: Modifier = Modifier) {
                     ) {
 
                         Button(
-                            onClick = {
-                                selectedIndex = index + 1
-                                when (index + 1) {
-                                    1 -> {
-                                        thePhoneThatWeWillSend =
-                                            "tel:*7115*1*$phoneNumber*$theAmountYouWillSet$encodedHash"
-                                    }
-
-                                    2 -> {
-                                        thePhoneThatWeWillSend =
-                                            "tel:*9*7*$phoneNumber*$theAmountYouWillSet$encodedHash"
-                                    }
-
-                                    3 -> {
-                                        thePhoneThatWeWillSend =
-                                            "tel:*990*$phoneNumber*$theAmountYouWillSet$encodedHash"
-                                    }
-
-                                    4 -> {
-                                        thePhoneThatWeWillSend =
-                                            "tel:*777*1*$phoneNumber*$theAmountYouWillSet$encodedHash"
-                                    }
-                                }
-
-                            }, colors = ButtonDefaults.buttonColors(
+                            onClick = { selectedIndex = index + 1 },
+                            colors = ButtonDefaults.buttonColors(
                                 containerColor = data.color
                             ), shape = RoundedCornerShape(12.dp)
                         ) {
@@ -327,7 +302,12 @@ private fun Body(modifier: Modifier = Modifier) {
                             checked = selectedIndex == index + 1,
                             onCheckedChange = {
                                 if (it) selectedIndex = index + 1
-                            }
+                            },
+                            colors = CheckboxDefaults.colors(
+                                checkedColor = sky_blue,
+                                checkmarkColor = black,
+                                uncheckedColor = red
+                            )
                         )
 
                     }
@@ -352,15 +332,79 @@ private fun Body(modifier: Modifier = Modifier) {
                     checked = makeSureOfUserInfo,
                     onCheckedChange = { makeSureOfUserInfo = it },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = sky_blue,
-                        checkmarkColor = black,
-                        uncheckedColor = red
+                        checkedColor = sky_blue, checkmarkColor = black, uncheckedColor = red
                     )
                 )
             }
             //2 THIS IS SEND BUTTON :
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 50.dp),
+                    enabled = makeSureOfUserInfo && selectedIndex != 0 && phoneNumber.trim()
+                        .isNotEmpty() && theAmountYouWillSet.trim().isNotEmpty(),
+                    onClick = {
 
+                        val cleanPhone = phoneNumber.trim()
+                        val cleanAmount = theAmountYouWillSet.trim()
 
+                        //1 HERE WE SET THE CODE BEFORE WE SEND IT :
+                        val ussdCode = when (selectedIndex) {
+                            1 -> "tel:*7115*1*$cleanPhone*$cleanAmount$encodedHash" //4 Orange
+                            2 -> "tel:*9*7*$cleanPhone*$cleanAmount$encodedHash"    //4 Vodafone
+                            3 -> "tel:*990*$cleanPhone*$cleanAmount$encodedHash"    //4 WE
+                            4 -> "tel:*777*1*$cleanPhone*$cleanAmount$encodedHash"  //4 Etisalat
+                            else -> {
+                                return@Button
+                            }
+                        }
+
+                        if (ussdCode.isNotEmpty()) {
+                            try {
+                                val intent = Intent(Intent.ACTION_DIAL).apply {
+                                    data = Uri.parse(ussdCode)
+                                }
+                                context.startActivity(intent)
+
+                                withdrawalDataViewModel.addNewData(
+                                    context = context,
+                                    locateDataBase = Withdrawal_Data().apply {
+
+                                        amount = theAmountYouWillSet.toDouble()
+                                        type = phoneNumber
+                                        items = "$the_amount_was_sent_to $phoneNumber"
+                                    },
+                                ) {
+
+                                }
+
+                            } catch (e: Exception) {
+
+                            }
+                        }
+
+                    },
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AppStyle.buttonColor,
+                    )
+
+                ) {
+                    Text(
+                        text = stringResource(R.string.send_money),
+                        fontFamily = cairo_medium,
+                        fontSize = 14.sp,
+                        color = AppStyle.textColor2
+                    )
+                }
+            }
         }
     }
 }
@@ -374,11 +418,6 @@ data class PAYMENTMETHOD(
     )
 
 
-//                                    val intent = Intent(Intent.ACTION_DIAL)
-//                                    intent.data = Uri.parse(thePhoneThatWeWillSend)
-//                                    context.startActivity(intent)
-
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewThisScreen(modifier: Modifier = Modifier) {
@@ -387,3 +426,4 @@ fun PreviewThisScreen(modifier: Modifier = Modifier) {
     CompactSendMoney(navController = rememberNavController())
 
 }
+

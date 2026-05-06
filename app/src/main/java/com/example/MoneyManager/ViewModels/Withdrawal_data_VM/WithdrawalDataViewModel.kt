@@ -33,28 +33,23 @@ class WithdrawalDataViewModel(private val realm: Realm = SavingWithdrawalData.re
 
     //` to show Toast Message to user :
     fun showToast(context: Context, message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     //` to add new data to Locale and claude data :
     fun addNewData(
         locateDataBase: Withdrawal_Data,
         context: Context,
-        navController: NavHostController,
-        navTo: String,
         onAddFun: () -> Unit
     ) {
         viewModelScope.launch {
-            showToast(context, MessagesOfToasts.saving)
             realm.write {
                 copyToRealm(locateDataBase)
             }
-            onAddFun()
+
             delay(300)
-            navController.navigate(navTo) {
-                popUpTo(navTo)
-            }
-            showToast(context, MessagesOfToasts.successfully_saving)
+          onAddFun
+            showToast(context, MessagesOfToasts.the_amount_was_deducted)
         }
     }
 

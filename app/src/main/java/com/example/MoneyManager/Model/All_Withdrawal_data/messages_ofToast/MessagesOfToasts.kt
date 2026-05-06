@@ -39,6 +39,7 @@ object MessagesOfToasts {
 
     var you_forgot_to_add_category =""
     var dont_forget_date =""
+    var the_amount_was_deducted = ""
 
     @Composable
     fun SetMessageTests() {
@@ -76,6 +77,7 @@ object MessagesOfToasts {
 
         you_forgot_to_add_category = stringResource(R.string.you_forgot_to_add_category)
         dont_forget_date = stringResource(R.string.dont_forget_date)
+        the_amount_was_deducted = stringResource(R.string.the_amount_was_deducted)
 
     }
 }

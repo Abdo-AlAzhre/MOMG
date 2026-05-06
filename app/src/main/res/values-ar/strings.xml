@@ -97,4 +97,5 @@
     <string name="available">المتاح</string>
     <string name="phone_number">رقم الهاتف</string>
     <string name="the_amount_you_will_sent">المبلغ الذي سوف ترسله</string>
+    <string name="you_must_make_sure_of_your_entered_info">هل انت متاكد من هذهي البيانات؟</string>
 </resources>

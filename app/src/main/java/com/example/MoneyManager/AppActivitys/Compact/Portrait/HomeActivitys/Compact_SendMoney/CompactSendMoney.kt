@@ -1,5 +1,8 @@
 package com.example.MoneyManager.AppActivitys.Compact.Portrait.HomeActivitys.Compact_SendMoney
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -13,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -20,10 +24,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -39,6 +46,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -61,18 +69,20 @@ import com.example.MoneyManager.ui.theme.blue_shadow
 import com.example.MoneyManager.ui.theme.darkRed
 import com.example.MoneyManager.ui.theme.forestGreen
 import com.example.MoneyManager.ui.theme.gray
+import com.example.MoneyManager.ui.theme.greenLight
 import com.example.MoneyManager.ui.theme.noColor
 import com.example.MoneyManager.ui.theme.orange
 import com.example.MoneyManager.ui.theme.red
+import com.example.MoneyManager.ui.theme.sky_blue
 import com.example.MoneyManager.ui.theme.snow
 import com.example.MoneyManager.ui.theme.snow_shadow
+import com.example.MoneyManager.ui.theme.softGreen
 import com.example.MoneyManager.ui.theme.white
 import com.money.trackpay.R
 
 @Composable
 fun CompactSendMoney(
-    modifier: Modifier = Modifier,
-    navController: NavHostController
+    modifier: Modifier = Modifier, navController: NavHostController
 ) {
     Scaffold(
         modifier = Modifier
@@ -82,11 +92,11 @@ fun CompactSendMoney(
     ) { paddingValues ->
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource(R.drawable.back_ground1),
+            painter = painterResource(R.drawable.add_edit_background),
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
 
-        )
+            )
         Body(
             modifier = Modifier
                 .fillMaxSize()
@@ -99,6 +109,8 @@ fun CompactSendMoney(
 
 @Composable
 private fun Body(modifier: Modifier = Modifier) {
+
+    val context = LocalContext.current
 
     //4 THIS IS ALL WITHDRAWAL DATA :
     val withdrawalDataViewModel: WithdrawalDataViewModel = viewModel()
@@ -129,12 +141,16 @@ private fun Body(modifier: Modifier = Modifier) {
 
     var phoneNumber by rememberSaveable { mutableStateOf("") }
     var theAmountYouWillSet by rememberSaveable { mutableStateOf("") }
-
+    var thePhoneThatWeWillSend by rememberSaveable { mutableStateOf("") }
+    var makeSureOfUserInfo by rememberSaveable { mutableStateOf(false) }
+    var selectedIndex by rememberSaveable { mutableStateOf(0) }
+    val encodedHash = Uri.encode("#") //1 this value is to set (#) in Uri so we can send it easy
 
     val listOfPaymentMethod = listOf<PAYMENTMETHOD>(
         PAYMENTMETHOD(name = "Orange", color = orange, textColor = black),
         PAYMENTMETHOD(name = "Vodafone", color = red, textColor = white),
         PAYMENTMETHOD(name = "We", color = snow, textColor = black),
+        PAYMENTMETHOD(name = "Etisalat", color = greenLight, textColor = black),
     )
 
 
@@ -150,8 +166,7 @@ private fun Body(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
                 .border(
-                    width = 1.dp,
-                    color = snow_shadow
+                    width = 1.dp, color = snow_shadow
                 )
                 .padding(vertical = 22.dp, horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -192,8 +207,7 @@ private fun Body(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(horizontal = 0.dp)
                 .border(
-                    width = 1.dp,
-                    color = snow_shadow
+                    width = 1.dp, color = snow_shadow
                 )
         ) {
             //2 HERE WE GET THE PHONE NUMBER :
@@ -220,9 +234,7 @@ private fun Body(modifier: Modifier = Modifier) {
                         cursorColor = black,
                     ),
                     textStyle = TextStyle(
-                        color = AppStyle.textColor2,
-                        fontSize = 16.sp,
-                        fontFamily = cairo_medium
+                        color = AppStyle.textColor2, fontSize = 16.sp, fontFamily = cairo_medium
                     ),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Number
@@ -253,52 +265,117 @@ private fun Body(modifier: Modifier = Modifier) {
                         cursorColor = black,
                     ),
                     textStyle = TextStyle(
-                        color = AppStyle.textColor2,
-                        fontSize = 16.sp,
-                        fontFamily = cairo_medium
+                        color = AppStyle.textColor2, fontSize = 16.sp, fontFamily = cairo_medium
                     ),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text
+                        keyboardType = KeyboardType.Number
                     ),
                 )
             }
             //2 HERE USER SLECT PAYMENT METHOD :
-
+            Spacer(modifier = Modifier.height(26.dp))
             LazyVerticalGrid(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp),
                 columns = GridCells.Fixed(3),
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(listOfPaymentMethod) {
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = it.color
-                        ),
-                        shape = RoundedCornerShape(12.dp)
+                itemsIndexed(listOfPaymentMethod) { index, data ->
+                    Column(
+                        modifier = Modifier,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
-                        Text(
-                            text = it.name,
-                            color = it.textColor,
-                            fontSize = 12.sp
+
+                        Button(
+                            onClick = {
+                                selectedIndex = index + 1
+                                when (index + 1) {
+                                    1 -> {
+                                        thePhoneThatWeWillSend =
+                                            "tel:*7115*1*$phoneNumber*$theAmountYouWillSet$encodedHash"
+                                    }
+
+                                    2 -> {
+                                        thePhoneThatWeWillSend =
+                                            "tel:*9*7*$phoneNumber*$theAmountYouWillSet$encodedHash"
+                                    }
+
+                                    3 -> {
+                                        thePhoneThatWeWillSend =
+                                            "tel:*990*$phoneNumber*$theAmountYouWillSet$encodedHash"
+                                    }
+
+                                    4 -> {
+                                        thePhoneThatWeWillSend =
+                                            "tel:*777*1*$phoneNumber*$theAmountYouWillSet$encodedHash"
+                                    }
+                                }
+
+                            }, colors = ButtonDefaults.buttonColors(
+                                containerColor = data.color
+                            ), shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Text(
+                                text = data.name, color = data.textColor, fontSize = 12.sp
+                            )
+                        }
+
+                        Checkbox(
+                            checked = selectedIndex == index + 1,
+                            onCheckedChange = {
+                                if (it) selectedIndex = index + 1
+                            }
                         )
+
                     }
                 }
+            }
+            Spacer(modifier = Modifier.height(28.dp))
 
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(6.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.you_must_make_sure_of_your_entered_info),
+                    color = AppStyle.textColor2,
+                    fontFamily = cairo_bold,
+                    fontSize = 16.sp
+                )
+                Checkbox(
+                    checked = makeSureOfUserInfo,
+                    onCheckedChange = { makeSureOfUserInfo = it },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = sky_blue,
+                        checkmarkColor = black,
+                        uncheckedColor = red
+                    )
+                )
             }
         }
 
+        //2 send button :
     }
-
-
 }
 
 
 data class PAYMENTMETHOD(
     val name: String,
     val color: Color,
-    val textColor: Color
-)
+    val textColor: Color,
+
+    )
+
+
+//                                    val intent = Intent(Intent.ACTION_DIAL)
+//                                    intent.data = Uri.parse(thePhoneThatWeWillSend)
+//                                    context.startActivity(intent)
 
 
 @Preview(showBackground = true)

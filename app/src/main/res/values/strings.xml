@@ -11,4 +11,5 @@
     <string name="available">Available</string>
     <string name="phone_number">Phone Number</string>
     <string name="the_amount_you_will_sent">The amount you will sent</string>
+    <string name="you_must_make_sure_of_your_entered_info">Are you sure about this data ?</string>
 </resources>

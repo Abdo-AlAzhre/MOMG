@@ -273,7 +273,7 @@ private fun Body(modifier: Modifier = Modifier) {
                 )
             }
             //2 HERE USER SLECT PAYMENT METHOD :
-            Spacer(modifier = Modifier.height(26.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             LazyVerticalGrid(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -333,8 +333,8 @@ private fun Body(modifier: Modifier = Modifier) {
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(28.dp))
 
+            //3 HERE WE MAKE USER MAKE SURE OF THE DATA THAT HE ENTERED LIKE PHONE AND MONEY :
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -358,9 +358,10 @@ private fun Body(modifier: Modifier = Modifier) {
                     )
                 )
             }
-        }
+            //2 THIS IS SEND BUTTON :
 
-        //2 send button :
+
+        }
     }
 }
 

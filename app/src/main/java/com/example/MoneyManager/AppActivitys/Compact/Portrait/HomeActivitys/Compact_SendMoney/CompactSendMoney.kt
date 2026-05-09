@@ -55,6 +55,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import cairo_bold
 import cairo_medium
+import com.example.MoneyManager.AppADS.BannerADS
 import com.example.MoneyManager.Model.All_Withdrawal_data.Withdrawal_Data
 import com.example.MoneyManager.ViewModels.DepositDataViewModel.DepositDataViewModel
 import com.example.MoneyManager.ViewModels.Withdrawal_data_VM.WithdrawalDataViewModel
@@ -82,6 +83,9 @@ fun CompactSendMoney(
             .fillMaxSize()
             .navigationBarsPadding()
             .systemBarsPadding(),
+        bottomBar = {
+            BannerADS()
+        }
     ) { paddingValues ->
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -165,7 +169,7 @@ private fun Body(modifier: Modifier = Modifier) {
                 .border(
                     width = 1.dp, color = snow_shadow
                 )
-                .padding(vertical = 22.dp, horizontal = 12.dp),
+                .padding(vertical = 2.dp, horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {

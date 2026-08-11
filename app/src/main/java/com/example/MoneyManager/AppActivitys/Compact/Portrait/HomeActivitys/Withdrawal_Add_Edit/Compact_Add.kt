@@ -379,12 +379,13 @@ private fun Compact_AddBody(modifier: Modifier = Modifier, navController: NavHos
                         locateDataBase = withdrawalData,
                     ) {
                         navController.navigate("Compact_home"){
-                          popUpTo("Compact_home"){
-                              inclusive = true
-                          }
+                            popUpTo("Compact_home"){
+                                inclusive = true
+                            }
                             launchSingleTop = true
                         }
                     }
+
                 } else if (amountValue == null) {
                     withdrawalDataViewModel.showToast(
                         context = context,

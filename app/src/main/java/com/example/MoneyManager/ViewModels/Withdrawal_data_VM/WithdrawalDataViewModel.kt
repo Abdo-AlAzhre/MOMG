@@ -48,7 +48,7 @@ class WithdrawalDataViewModel(private val realm: Realm = SavingWithdrawalData.re
             }
 
             delay(300)
-          onAddFun
+            onAddFun()
             showToast(context, MessagesOfToasts.the_amount_was_deducted)
         }
     }
@@ -126,7 +126,7 @@ class WithdrawalDataViewModel(private val realm: Realm = SavingWithdrawalData.re
     ) {
         viewModelScope.launch {
             showProgress()
-            showToast(context = context , message = MessagesOfToasts.saving)
+            showToast(context = context, message = MessagesOfToasts.saving)
             delay(1500)
             val realmFile = File(realm.configuration.path)
             // المجلد اللي هتنسخ فيه
@@ -136,7 +136,7 @@ class WithdrawalDataViewModel(private val realm: Realm = SavingWithdrawalData.re
             val backupFile = File(backupDir, "withdrawalBackup.realm")
             realmFile.copyTo(backupFile, overwrite = true)
             hiedProgress()
-            showToast(context = context , message = MessagesOfToasts.successfully_saving)
+            showToast(context = context, message = MessagesOfToasts.successfully_saving)
         }
     }
 
@@ -149,7 +149,8 @@ class WithdrawalDataViewModel(private val realm: Realm = SavingWithdrawalData.re
         showProgress()
         val realm = SavingWithdrawalData.realmWithdrawal
         val realmFile = File(realm.configuration.path)
-        val backupFile = File(context.getExternalFilesDir(null), "withdrawalBackup/withdrawalBackup.realm")
+        val backupFile =
+            File(context.getExternalFilesDir(null), "withdrawalBackup/withdrawalBackup.realm")
         viewModelScope.launch {
             showToast(context = context, MessagesOfToasts.data_recovery)
             delay(2000)

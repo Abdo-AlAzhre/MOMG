@@ -82,7 +82,7 @@
 
     <string name="dark_mode" translatable="false">Dark mode</string>
     <string name="light_mode">Light mode</string>
-    <string name="vertion" translatable="false">" vertion : 1.0.7"</string>
+    <string name="vertion" translatable="false">" vertion : 1.1.0"</string>
 
     <string name="category_edit">Withdrawal category edit</string>
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BetterCommentsSettings">
+    <option name="initialized" value="true" />
+    <option name="tags">
+      <list>
+        <CustomTag>
+          <option name="backgroundColor" value="#000000" />
+          <option name="bold" value="true" />
+          <option name="color" value="#FFFFFF" />
+          <option name="hasUnderline" value="true" />
+          <option name="type" value="1" />
+        </CustomTag>
+        <CustomTag>
+          <option name="backgroundColor" value="#FFFFFF" />
+          <option name="bold" value="true" />
+          <option name="color" value="#FF6600" />
+          <option name="hasUnderline" value="true" />
+          <option name="type" value="2" />
+        </CustomTag>
+        <CustomTag>
+          <option name="backgroundColor" value="#FFFFFF" />
+          <option name="bold" value="true" />
+          <option name="color" value="#FF00FF" />
+          <option name="hasUnderline" value="true" />
+          <option name="type" value="`" />
+        </CustomTag>
+        <CustomTag>
+          <option name="backgroundColor" value="#FFFFFF" />
+          <option name="bold" value="true" />
+          <option name="color" value="#FF0000" />
+          <option name="hasUnderline" value="true" />
+          <option name="type" value="4" />
+        </CustomTag>
+        <CustomTag>
+          <option name="backgroundColor" value="#FFFFFF" />
+          <option name="bold" value="true" />
+          <option name="color" value="#00CC00" />
+          <option name="hasUnderline" value="true" />
+          <option name="type" value="~" />
+        </CustomTag>
+        <CustomTag>
+          <option name="backgroundColor" value="#FFFFFF" />
+          <option name="bold" value="true" />
+          <option name="color" value="#3366FF" />
+          <option name="hasUnderline" value="true" />
+          <option name="type" value="3" />
+        </CustomTag>
+      </list>
+    </option>
+  </component>
+</project>

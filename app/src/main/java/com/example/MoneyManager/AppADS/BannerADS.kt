@@ -32,6 +32,7 @@ fun BannerADS(modifier: Modifier = Modifier) {
                 })
             }
             banner
+
         }
     )
 }

@@ -1,7 +1,9 @@
 package com.example.MoneyManager.ViewModels.Withdrawal_data_VM
 
 import android.content.Context
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
@@ -47,8 +49,8 @@ class WithdrawalDataViewModel(private val realm: Realm = SavingWithdrawalData.re
                 copyToRealm(locateDataBase)
             }
 
-            delay(300)
             onAddFun()
+            delay(300)
             showToast(context, MessagesOfToasts.the_amount_was_deducted)
         }
     }
@@ -119,6 +121,7 @@ class WithdrawalDataViewModel(private val realm: Realm = SavingWithdrawalData.re
     }
 
     //` to save bacup in Downloads  :
+    @RequiresApi(Build.VERSION_CODES.FROYO)
     fun backupWithdrawalData(
         context: Context,
         showProgress: () -> Unit,

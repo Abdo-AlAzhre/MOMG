@@ -69,8 +69,9 @@
     <string name="search_by_category">Date or Category</string>
 
     <string name="warning_title">Welcome</string>
-    <string name="warning_message">It is a simple application for : \nStoring and managing financial data\nYou may fond some ads , so we apologize for the inconvenience.</string>
+    <string name="warning_message">It is a simple application to help you  \nrecord and manage your financial transactions \nIf you encounter any problems please feel free to contact us </string>
     <string name="are_you_shore">I understand</string>
+
 
     <string name="arabic">العربيه</string>
     <string name="english">English</string>
@@ -82,7 +83,7 @@
 
     <string name="dark_mode" translatable="false">Dark mode</string>
     <string name="light_mode">Light mode</string>
-    <string name="vertion" translatable="false">" vertion : 1.1.0"</string>
+    <string name="vertion" translatable="false">" vertion : 2.0.0"</string>
 
     <string name="category_edit">Withdrawal category edit</string>
 

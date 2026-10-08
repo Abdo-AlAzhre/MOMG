@@ -87,9 +87,6 @@ fun Compact_Edit(navController: NavHostController, id: String) {
         modifier = Modifier
             .navigationBarsPadding()
             .systemBarsPadding(),
-        bottomBar = {
-            BannerADS(modifier = Modifier)
-        }
     ) { innerpadding ->
         Image(
             modifier = Modifier

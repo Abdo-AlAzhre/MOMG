@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cairo_bold
-import com.example.MoneyManager.AppADS.BannerADS
 import com.example.MoneyManager.ViewModels.DepositDataViewModel.DepositDataViewModel
 import com.example.MoneyManager.ViewModels.Withdrawal_data_VM.WithdrawalDataViewModel
 import com.example.MoneyManager.ui.theme.AppStyle
@@ -65,9 +64,7 @@ fun CategoryInventory(
             .fillMaxSize()
             .systemBarsPadding()
             .navigationBarsPadding(),
-        bottomBar = {
-            BannerADS(modifier = Modifier)
-        }
+
     ) { paddingValues ->
         //4 here we just add the background of this activity :
         Image(

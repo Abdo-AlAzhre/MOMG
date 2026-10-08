@@ -80,9 +80,7 @@ fun Compact_Monthly(navController: NavHostController) {
             .fillMaxSize()
             .navigationBarsPadding()
             .systemBarsPadding(),
-        bottomBar = {
-            BannerADS(modifier = Modifier)
-        }
+
     ) { innerPadding ->
         Image(
             modifier = Modifier.fillMaxSize(),

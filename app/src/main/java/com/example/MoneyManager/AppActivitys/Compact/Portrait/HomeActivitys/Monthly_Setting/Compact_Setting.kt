@@ -77,9 +77,8 @@ fun Compact_Setting(navController: NavHostController) {
             .fillMaxSize()
             .systemBarsPadding()
             .navigationBarsPadding()
-            .background(crem_color), bottomBar = {
-            BannerADS(modifier = Modifier)
-        }) { innerpadding ->
+            .background(crem_color),
+    ) { innerpadding ->
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(R.drawable.ferst_background),

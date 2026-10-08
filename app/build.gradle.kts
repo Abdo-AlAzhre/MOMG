@@ -17,8 +17,8 @@ android {
         minSdk = 24
         targetSdk = 36
 
-        versionCode = 9
-        versionName = "1.2.0"
+        versionCode = 10
+        versionName = "1.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -99,5 +99,5 @@ dependencies {
     // to make it do some function on background :
     implementation("androidx.work:work-runtime-ktx:2.9.0")
     //to add ADS to this app
-    implementation("com.startapp:inapp-sdk:5.3.0")
+    implementation("com.startapp:inapp-sdk:5.4.0")
 }

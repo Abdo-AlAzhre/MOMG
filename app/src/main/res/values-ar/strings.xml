@@ -50,7 +50,7 @@
     <string name="search">بحث...</string>
     <string name="search_by_category">التاريخ او الصنف</string>
     <string name="warning_title">Welcome</string>
-    <string name="warning_message">It is a simple application for : \nStoring and managing financial data\nYou may fond some ads , so we apologize for the inconvenience.</string>
+    <string name="warning_message">It is a simple application to help you  \nrecord and manage your financial transactions \nIf you encounter any problemsplease feel free to contact us </string>
     <string name="are_you_shore">انا افهم هذا</string>
     <string name="make_sure_of_entering_all_data">تاكد من ادخال كل البانات بشكل صحيح</string>
     <string name="make_sure_of_enter_email">يجب عليك ادخال الايميل</string>
@@ -100,4 +100,5 @@
     <string name="you_must_make_sure_of_your_entered_info">هل انت متاكد من هذهي البيانات؟</string>
     <string name="the_amount_was_deducted">تم خصم المبلغ من الاجمالى</string>
     <string name="the_amount_was_sent_to">تم ارسال المبلغ الي :</string>
+    <string name="my_email_contact">qoderixe@gmail.com</string>
 </resources>

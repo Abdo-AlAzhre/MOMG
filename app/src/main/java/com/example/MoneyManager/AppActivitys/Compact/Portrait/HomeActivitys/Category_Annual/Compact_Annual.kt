@@ -3,7 +3,6 @@ package com.example.MoneyManager.AppActivitys.Compact.Portrait.HomeActivitys.Cat
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Paint
-
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
@@ -61,7 +60,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cairo_medium
-import com.example.MoneyManager.AppADS.BannerADS
 import com.example.MoneyManager.Model.All_Withdrawal_data.listOfYears
 import com.example.MoneyManager.ViewModels.Annual_Monthly_VM.AnnualViewModel
 import com.example.MoneyManager.ui.theme.AppStyle
@@ -80,9 +78,7 @@ fun Compact_Annual(navController: NavHostController) {
             .fillMaxSize()
             .navigationBarsPadding()
             .systemBarsPadding(),
-        bottomBar = {
-            BannerADS(modifier = Modifier)
-        }
+
 
     ) { innerPadding ->
         Image(

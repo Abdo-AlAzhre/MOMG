@@ -77,9 +77,7 @@ fun Withdrawal_Information(navController: NavHostController, id: String) {
             .fillMaxSize()
             .navigationBarsPadding()
             .systemBarsPadding(),
-        bottomBar = {
-            BannerADS(modifier = Modifier)
-        }
+
     ) { innerPadding ->
         Image(
             modifier = Modifier.fillMaxSize(),

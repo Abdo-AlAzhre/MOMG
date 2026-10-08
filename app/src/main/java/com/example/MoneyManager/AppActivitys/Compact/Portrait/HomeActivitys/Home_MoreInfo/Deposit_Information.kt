@@ -53,7 +53,7 @@ import androidx.navigation.NavHostController
 import cairo_bold
 import cairo_medium
 import cairo_regular
-import com.example.MoneyManager.AppADS.BannerADS
+
 import com.example.MoneyManager.AppADS.ImageADS
 import com.example.MoneyManager.Model.All_Deposit_data.Deposit_data
 import com.example.MoneyManager.Model.All_Withdrawal_data.messages_ofToast.MessagesOfToasts
@@ -83,9 +83,7 @@ fun Deposit_Information(
             .fillMaxSize()
             .navigationBarsPadding()
             .systemBarsPadding(),
-        bottomBar = {
-            BannerADS(modifier = Modifier)
-        }
+
     ) { paddingValues ->
 
         Image(

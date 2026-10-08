@@ -85,9 +85,7 @@ fun Compact_AddNewItems(navController: NavHostController) {
             .fillMaxSize()
             .systemBarsPadding()
             .navigationBarsPadding(),
-        bottomBar = {
-            BannerADS(modifier = Modifier)
-        }
+
     ) { innerpadding ->
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -104,7 +102,7 @@ private fun Compact_AddBody(modifier: Modifier = Modifier, navController: NavHos
     val context = LocalContext.current
     val withdrawalDataViewModel: WithdrawalDataViewModel = viewModel()
     val calendar = Calendar.getInstance()
-    //1 withdrawal types
+    //1 withdrawal types :
     val withdrawalTypeViewModel: WithdrawalTypeViewModel = viewModel()
     val newWithdrawalType by withdrawalTypeViewModel.withdrawalTypesFlow.collectAsState(initial = emptyList())
     var getOldType by rememberSaveable { mutableStateOf("") }
@@ -355,6 +353,13 @@ private fun Compact_AddBody(modifier: Modifier = Modifier, navController: NavHos
 
                 val amountValue = withdrawalAmount.toDoubleOrNull()
 
+                navController.navigate("Compact_home"){
+                    popUpTo("Compact_home"){
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+
                 if (amountValue != null && days > 0 && withdrawalTypes.isNotEmpty() && withdrawalTypes != "إضافة شئ اخر + ") {
                     val withdrawalData = Withdrawal_Data().apply {
                         amount = amountValue
@@ -378,12 +383,7 @@ private fun Compact_AddBody(modifier: Modifier = Modifier, navController: NavHos
                         context = context,
                         locateDataBase = withdrawalData,
                     ) {
-                        navController.navigate("Compact_home"){
-                            popUpTo("Compact_home"){
-                                inclusive = true
-                            }
-                            launchSingleTop = true
-                        }
+
                     }
 
                 } else if (amountValue == null) {

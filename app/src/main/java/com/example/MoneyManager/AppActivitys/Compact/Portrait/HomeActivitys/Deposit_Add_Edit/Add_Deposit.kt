@@ -88,9 +88,7 @@ fun Add_Deposit(
             .fillMaxSize()
             .navigationBarsPadding()
             .systemBarsPadding(),
-        bottomBar = {
-            BannerADS(modifier = Modifier)
-        }
+
     ) { paddingValues ->
         Image(
             modifier = Modifier.fillMaxSize(),
